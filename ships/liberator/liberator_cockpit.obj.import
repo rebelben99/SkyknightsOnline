@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/liberator_cockpit.obj-a09a7f267a0feeca33d26681fb4ca1fe.mesh"
+
+[deps]
+
+files=[ "res://.import/liberator_cockpit.obj-a09a7f267a0feeca33d26681fb4ca1fe.mesh" ]
+
+source_file="res://ships/liberator/liberator_cockpit.obj"
+dest_files=[ "res://.import/liberator_cockpit.obj-a09a7f267a0feeca33d26681fb4ca1fe.mesh", "res://.import/liberator_cockpit.obj-a09a7f267a0feeca33d26681fb4ca1fe.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

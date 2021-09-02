@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/mosquito_cockpit.obj-47d1d7715f70fc59326b918f3eb41951.mesh"
+
+[deps]
+
+files=[ "res://.import/mosquito_cockpit.obj-47d1d7715f70fc59326b918f3eb41951.mesh" ]
+
+source_file="res://ships/mosquito/mosquito_cockpit.obj"
+dest_files=[ "res://.import/mosquito_cockpit.obj-47d1d7715f70fc59326b918f3eb41951.mesh", "res://.import/mosquito_cockpit.obj-47d1d7715f70fc59326b918f3eb41951.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

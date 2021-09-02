@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/fins.obj-41810c80235e8441e164ae6bfab2f175.mesh"
+
+[deps]
+
+files=[ "res://.import/fins.obj-41810c80235e8441e164ae6bfab2f175.mesh" ]
+
+source_file="res://ships/reaver/fins.obj"
+dest_files=[ "res://.import/fins.obj-41810c80235e8441e164ae6bfab2f175.mesh", "res://.import/fins.obj-41810c80235e8441e164ae6bfab2f175.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

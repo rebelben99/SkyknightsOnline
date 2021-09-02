@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/reaver_chassis.obj-7a1d6dc5d120c2ed10d6c277f3618b0d.mesh"
+
+[deps]
+
+files=[ "res://.import/reaver_chassis.obj-7a1d6dc5d120c2ed10d6c277f3618b0d.mesh" ]
+
+source_file="res://ships/reaver/reaver_chassis.obj"
+dest_files=[ "res://.import/reaver_chassis.obj-7a1d6dc5d120c2ed10d6c277f3618b0d.mesh", "res://.import/reaver_chassis.obj-7a1d6dc5d120c2ed10d6c277f3618b0d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

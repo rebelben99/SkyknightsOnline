@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/galaxy_cockpit.obj-d451305761409ca359bdf8bcd3f0b555.mesh"
+
+[deps]
+
+files=[ "res://.import/galaxy_cockpit.obj-d451305761409ca359bdf8bcd3f0b555.mesh" ]
+
+source_file="res://ships/galaxy/galaxy_cockpit.obj"
+dest_files=[ "res://.import/galaxy_cockpit.obj-d451305761409ca359bdf8bcd3f0b555.mesh", "res://.import/galaxy_cockpit.obj-d451305761409ca359bdf8bcd3f0b555.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
