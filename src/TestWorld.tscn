@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/ships/reaver/Reaver.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/ships/liberator/Liberator.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ships/liberator/Liberator.gd" type="Script" id=3]
+[ext_resource path="res://src/ships/reaver/Reaver.gd" type="Script" id=4]
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="PhysicsMaterial" id=2]
+
+[node name="TestWorld" type="Spatial"]
+visible = false
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, -1.62781, -10.8561, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -10.0655, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
+shape = SubResource( 1 )
+
+[node name="Reaver" type="RigidBody" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.9587, 0, 0 )
+physics_material_override = SubResource( 2 )
+can_sleep = false
+script = ExtResource( 4 )
+
+[node name="Reaver2" type="RigidBody" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -42.6705, 0, 0 )
+physics_material_override = SubResource( 2 )
+can_sleep = false
+script = ExtResource( 4 )
+
+[node name="Liberator" type="RigidBody" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.0297, 0, 0 )
+script = ExtResource( 3 )
+
+[node name="Liberator2" type="RigidBody" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 44.3964, 0, 0 )
+script = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.913723, 0.406338, 0, -0.406338, 0.913723, 0, 29.4885, 51.7351 )
+current = true

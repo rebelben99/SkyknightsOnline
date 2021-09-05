@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/needler.obj-fde4185c5415d412eabf8d5b2d8f47cf.mesh"
+
+[deps]
+
+files=[ "res://.import/needler.obj-fde4185c5415d412eabf8d5b2d8f47cf.mesh" ]
+
+source_file="res://src/ships/mosquito/weapons/needler/needler.obj"
+dest_files=[ "res://.import/needler.obj-fde4185c5415d412eabf8d5b2d8f47cf.mesh", "res://.import/needler.obj-fde4185c5415d412eabf8d5b2d8f47cf.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

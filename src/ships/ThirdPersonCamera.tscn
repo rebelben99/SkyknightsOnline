@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/ships/ThirdPersonCamera.gd" type="Script" id=1]
+
+[node name="ThirdPersonCamera" type="Spatial"]
+visible = false
+script = ExtResource( 1 )
+
+[node name="InnerGimbal" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.984313, -0.176432, 0, 0.176432, 0.984313, 0, 7.62571, -14.6593 )
+
+[node name="Camera" type="Camera" parent="InnerGimbal"]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0 )
+current = true
+fov = 74.0
+far = 10000.0

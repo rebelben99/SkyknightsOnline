@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/ships/liberator/liberator_chassis.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://src/ships/liberator/liberator_cockpit.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://src/ships/FirstPersonCamera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ships/ThirdPersonCamera.gd" type="Script" id=4]
+[ext_resource path="res://src/ships/liberator/Liberator.gd" type="Script" id=5]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 3.05921
+height = 11.5094
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.592157, 0.592157, 0.592157, 1 )
+
+[node name="Liberator" type="RigidBody"]
+script = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.20099, -1.8976 )
+shape = SubResource( 1 )
+
+[node name="Chassis" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 3 )
+
+[node name="Cockpit" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.78977, 5.53808 )
+mesh = ExtResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Nosegun" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25978, 6.3719 )
+
+[node name="Bellygun" type="Position3D" parent="."]
+transform = Transform( 1, -8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 0, 8.74228e-08, -7.64274e-15, -1, 0, 2.66251, -5.86547 )
+
+[node name="Tailgun" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6759, -16.8159 )
+
+[node name="Seat1" type="Spatial" parent="."]
+
+[node name="FirstPersonCamera" parent="Seat1" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82575, 6.09318 )
+visible = true
+
+[node name="InnerGimbal2" type="Spatial" parent="Seat1/FirstPersonCamera"]
+
+[node name="Camera" type="Camera" parent="Seat1/FirstPersonCamera/InnerGimbal2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+fov = 74.0
+far = 10000.0
+
+[node name="ThirdPersonCamera" type="Spatial" parent="Seat1"]
+script = ExtResource( 4 )
+
+[node name="InnerGimbal" type="Spatial" parent="Seat1/ThirdPersonCamera"]
+transform = Transform( 1, 0, 0, 0, 0.984313, -0.176432, 0, 0.176432, 0.984313, 0, 11.2186, -14.6593 )
+
+[node name="Camera" type="Camera" parent="Seat1/ThirdPersonCamera/InnerGimbal"]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0 )
+current = true
+fov = 74.0
+far = 10000.0
+
+[node name="Seat2" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7157, -5.10465 )
+
+[node name="FirstPersonCamera" parent="Seat2" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+visible = true
+
+[node name="InnerGimbal2" type="Spatial" parent="Seat2/FirstPersonCamera"]
+
+[node name="Camera" type="Camera" parent="Seat2/FirstPersonCamera/InnerGimbal2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+fov = 74.0
+far = 10000.0
+
+[node name="Seat3" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.61055, -16.9403 )
+
+[node name="FirstPersonCamera" parent="Seat3" instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+visible = true
+
+[node name="InnerGimbal2" type="Spatial" parent="Seat3/FirstPersonCamera"]
+
+[node name="Camera" type="Camera" parent="Seat3/FirstPersonCamera/InnerGimbal2"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+fov = 74.0
+far = 10000.0

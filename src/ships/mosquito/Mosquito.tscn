@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/ships/mosquito/Mosquito.gd" type="Script" id=1]
+[ext_resource path="res://src/ships/mosquito/mosquito_cockpit.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://src/ships/mosquito/mosquito_chassis.obj" type="ArrayMesh" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 2.07643
+height = 10.8291
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.592157, 0.592157, 0.592157, 1 )
+
+[node name="Mosquito" type="RigidBody"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.68369, -0.700862 )
+shape = SubResource( 1 )
+
+[node name="Chassis" type="MeshInstance" parent="."]
+mesh = ExtResource( 3 )
+material/0 = SubResource( 3 )
+
+[node name="Cockpit" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.45501, 3.4479 )
+mesh = ExtResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Nosegun" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6935, 4.78959 )
+
+[node name="Pylons" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.84117, -0.905369 )

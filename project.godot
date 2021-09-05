@@ -14,6 +14,12 @@ config/name="SkyknightsOnline"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+DebugOverlay="*res://src/debug_overlay/DebugOverlay.tscn"
+InputManager="*res://src/InputManager.gd"
+GameManager="*res://src/GameManager.gd"
+
 [input]
 
 ui_accept={

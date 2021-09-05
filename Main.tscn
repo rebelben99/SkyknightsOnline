@@ -1,38 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Ship.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://src/Hangar.tscn" type="PackedScene" id=1]
 
 [node name="Main" type="Spatial"]
 
-[node name="World" type="Spatial" parent="."]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="World"]
-
-[node name="Label" type="Label" parent="World/CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "wat"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Player" type="Spatial" parent="World"]
-script = ExtResource( 2 )
-
-[node name="Ship" parent="World/Player" instance=ExtResource( 1 )]
-
-[node name="InputManager" type="Node" parent="World/Player"]
-
-[node name="CSGBox" type="CSGBox" parent="World"]
-transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, -1.62781, -10.8561, 0 )
-
-[node name="CSGCylinder" type="CSGCylinder" parent="World"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.45269, 49.6682 )
-radius = 4.53418
-height = 37.1069
-
-[node name="CSGCylinder2" type="CSGCylinder" parent="World"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 37.5411, 8.98569, 46.3653 )
-radius = 4.53418
-height = 37.1069
+[node name="Hangar" parent="." instance=ExtResource( 1 )]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/galaxy_chassis.obj-c6cf8b1f146ed18852b0af36418c9d5e.mesh"
+
+[deps]
+
+files=[ "res://.import/galaxy_chassis.obj-c6cf8b1f146ed18852b0af36418c9d5e.mesh" ]
+
+source_file="res://src/ships/galaxy/galaxy_chassis.obj"
+dest_files=[ "res://.import/galaxy_chassis.obj-c6cf8b1f146ed18852b0af36418c9d5e.mesh", "res://.import/galaxy_chassis.obj-c6cf8b1f146ed18852b0af36418c9d5e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

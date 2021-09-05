@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/rotary.obj-74d43b86390a969b2082d122860bf3bd.mesh"
+
+[deps]
+
+files=[ "res://.import/rotary.obj-74d43b86390a969b2082d122860bf3bd.mesh" ]
+
+source_file="res://src/ships/mosquito/weapons/rotary/rotary.obj"
+dest_files=[ "res://.import/rotary.obj-74d43b86390a969b2082d122860bf3bd.mesh", "res://.import/rotary.obj-74d43b86390a969b2082d122860bf3bd.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/tanks.obj-5cba66eb66673d4607ce6169bd42569b.mesh"
+
+[deps]
+
+files=[ "res://.import/tanks.obj-5cba66eb66673d4607ce6169bd42569b.mesh" ]
+
+source_file="res://src/ships/mosquito/weapons/tanks/tanks.obj"
+dest_files=[ "res://.import/tanks.obj-5cba66eb66673d4607ce6169bd42569b.mesh", "res://.import/tanks.obj-5cba66eb66673d4607ce6169bd42569b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

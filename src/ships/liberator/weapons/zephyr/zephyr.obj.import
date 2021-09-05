@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/zephyr.obj-8294af4df30012e4adc25e35f0f0e2e6.mesh"
+
+[deps]
+
+files=[ "res://.import/zephyr.obj-8294af4df30012e4adc25e35f0f0e2e6.mesh" ]
+
+source_file="res://src/ships/liberator/weapons/zephyr/zephyr.obj"
+dest_files=[ "res://.import/zephyr.obj-8294af4df30012e4adc25e35f0f0e2e6.mesh", "res://.import/zephyr.obj-8294af4df30012e4adc25e35f0f0e2e6.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

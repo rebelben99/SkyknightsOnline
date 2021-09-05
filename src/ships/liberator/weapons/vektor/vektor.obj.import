@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/vektor.obj-971dab45ad4c84d58b15df24573b1a43.mesh"
+
+[deps]
+
+files=[ "res://.import/vektor.obj-971dab45ad4c84d58b15df24573b1a43.mesh" ]
+
+source_file="res://src/ships/liberator/weapons/vektor/vektor.obj"
+dest_files=[ "res://.import/vektor.obj-971dab45ad4c84d58b15df24573b1a43.mesh", "res://.import/vektor.obj-971dab45ad4c84d58b15df24573b1a43.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

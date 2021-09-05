@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/banshee.obj-079c7e8439774a83760a48f9573cad8e.mesh"
+
+[deps]
+
+files=[ "res://.import/banshee.obj-079c7e8439774a83760a48f9573cad8e.mesh" ]
+
+source_file="res://src/ships/mosquito/weapons/banshee/banshee.obj"
+dest_files=[ "res://.import/banshee.obj-079c7e8439774a83760a48f9573cad8e.mesh", "res://.import/banshee.obj-079c7e8439774a83760a48f9573cad8e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
