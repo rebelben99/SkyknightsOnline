@@ -20,6 +20,10 @@ DebugOverlay="*res://src/debug_overlay/DebugOverlay.tscn"
 InputManager="*res://src/InputManager.gd"
 GameManager="*res://src/GameManager.gd"
 
+[editor_plugins]
+
+enabled=PoolStringArray(  )
+
 [input]
 
 ui_accept={
@@ -78,6 +82,7 @@ ui_end={
 [physics]
 
 common/enable_pause_aware_picking=true
+3d/active_soft_world=false
 
 [rendering]
 

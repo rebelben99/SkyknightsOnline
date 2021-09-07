@@ -1,16 +1,61 @@
 extends Spatial
 
+var magazine_capacity = 27
+var magazine_current = magazine_capacity
+var ammo = 324
+var rof = 750.0 # rounds per minute
+var reload_time = 2.25
+var muzzle_velocity = 200
+var damage = 240
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var refire_delay = 60.0 / rof
+var current_time = 0.0
+var can_shoot = true
+var reloading = false
 
+var Bullet = preload('res://src/ships/Bullet.tscn')
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-    pass # Replace with function body.
+    pass
 
+func fire():
+    var bullet = Bullet.instance()
+    bullet.init(self)
+    get_parent().get_parent().get_parent().add_child(bullet)
+    # print(owner, ', ', owner.owner)
+    # owner.owner.add_child(bullet)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#    pass
+func reload():
+    reloading = true
+
+func on_impact(target):    
+    if target.get('current_health'):
+        target.current_health -= damage
+
+func update(delta, shoot):
+    current_time += delta
+
+    if can_shoot and shoot:
+        fire()
+        can_shoot = false
+        current_time = 0
+        magazine_current -= 1
+
+        if magazine_current == 0:
+            reloading = true
+        return
+
+    if !can_shoot:
+        if reloading:
+            if (current_time < reload_time):
+                return
+            reloading = false
+            can_shoot = true
+            magazine_current = magazine_capacity
+            current_time = 0
+            return
+        
+        if (current_time < refire_delay):
+            return
+        can_shoot = true
+        current_time = 0

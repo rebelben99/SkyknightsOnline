@@ -1,17 +1,18 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
+[ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://src/Hangar.gd" type="Script" id=2]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.34902, 0.34902, 0.34902, 1 )
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 1, 0.418356, 1 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_color = Color( 0.152941, 0.152941, 0.152941, 1 )
 
-[sub_resource type="CylinderShape" id=2]
+[sub_resource type="CylinderShape" id=4]
 radius = 6.21885
 
 [node name="Hangar" type="Spatial"]
@@ -21,7 +22,7 @@ script = ExtResource( 2 )
 
 [node name="Floor" type="CSGBox" parent="Enviroment"]
 transform = Transform( 100, 0, 0, 0, 1, 0, 0, 0, 100, -1.62781, -0.987511, 0 )
-material_override = SubResource( 3 )
+material_override = SubResource( 1 )
 use_in_baked_light = true
 
 [node name="StaticBody" type="StaticBody" parent="Enviroment/Floor"]
@@ -29,17 +30,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0162781, 0.790601, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Enviroment/Floor/StaticBody"]
 transform = Transform( 1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, -0.0347104, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="BackWall" type="CSGBox" parent="Enviroment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.3769 )
-material_override = SubResource( 3 )
+material_override = SubResource( 1 )
 width = 197.129
 height = 78.1842
 
 [node name="SideWall" type="CSGBox" parent="Enviroment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.8748, 0, 0 )
-material_override = SubResource( 3 )
+material_override = SubResource( 1 )
 height = 78.3805
 depth = 120.153
 
@@ -48,17 +49,16 @@ transform = Transform( 0.642788, 0, -0.766044, 0, 1, 0, 0.766044, 0, 0.642788, 0
 
 [node name="CSGCylinder" type="CSGCylinder" parent="Pedestal"]
 transform = Transform( 0.606696, 0, 0.794934, 0, 1, 0, -0.794934, 0, 0.606696, 0, -1.26851, 0 )
-material_override = SubResource( 4 )
+material_override = SubResource( 3 )
 radius = 5.83232
 height = 1.9782
 sides = 32
 
 [node name="StaticBody" type="StaticBody" parent="Pedestal"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Pedestal/StaticBody"]
 transform = Transform( 1, 0, 3.55271e-15, 0, 1, 0, -3.55271e-15, 0, 1, 0, -0.0347104, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 4 )
 
 [node name="ShipCamera" type="Spatial" parent="."]
 transform = Transform( 0.968908, 0.0948677, -0.228512, 0, 0.923572, 0.383425, 0.247422, -0.371504, 0.894856, -3.41012, 7.73563, 10.9151 )
@@ -68,10 +68,6 @@ transform = Transform( 0.997803, 0, -0.0662565, 0, 1, 0, 0.0662565, 0, 0.997803,
 
 [node name="BellygunCamera" type="Spatial" parent="."]
 transform = Transform( 0.999902, 0, -0.0139796, 0, 1, 0, 0.0139796, 0, 0.999902, 9.74848, 4.59718, 7.12837 )
-
-[node name="Camera2" type="Camera" parent="BellygunCamera"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-current = true
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.997803, 0.0215382, -0.062658, 0, 0.945689, 0.325073, 0.0662565, -0.324359, 0.943611, -0.120166, 8.58172, 8.45338 )
@@ -123,3 +119,6 @@ margin_bottom = 180.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 1 )
