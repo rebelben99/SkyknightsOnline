@@ -26,7 +26,7 @@ window/size/always_on_top=true
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/RadialMenu/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [input]
 
