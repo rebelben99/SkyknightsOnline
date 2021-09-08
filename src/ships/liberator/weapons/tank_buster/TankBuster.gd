@@ -1,16 +1,13 @@
-extends Spatial
+extends 'res://src/ships/BaseWeapon.gd'
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-    pass # Replace with function body.
+    magazine_capacity = 30
+    magazine = magazine_capacity
+    ammo_capacity = 300
+    ammo = ammo_capacity
+    rounds_per_minute = 1200.0
+    reload_time = 3.5
+    muzzle_velocity = 200
+    damage = 240
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#    pass
+    crosshair = 'res://src/ships/reaver/weapons/vortek/vortek_crosshair.png'

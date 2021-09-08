@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/ships/reaver/reaver_cockpit.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://src/ships/reaver/reaver_chassis.obj" type="ArrayMesh" id=2]
@@ -30,16 +30,21 @@ extents = Vector3( 2.20341, 0.0832755, 0.449742 )
 
 [sub_resource type="BoxShape" id=7]
 
-[sub_resource type="ShaderMaterial" id=9]
-
 [sub_resource type="SpatialMaterial" id=8]
-next_pass = SubResource( 9 )
-albedo_color = Color( 0.262745, 0.262745, 0.262745, 1 )
-metallic = 0.8
-roughness = 0.8
+flags_world_triplanar = true
+metallic = 0.48
 clearcoat_enabled = true
 clearcoat = 1.0
 clearcoat_gloss = 0.5
+ao_enabled = true
+ao_light_affect = 0.0
+ao_on_uv2 = false
+ao_texture_channel = 0
+refraction_enabled = true
+refraction_scale = 0.05
+refraction_texture_channel = 0
+uv1_triplanar = true
+uv2_triplanar = true
 
 [node name="Reaver" type="RigidBody"]
 physics_material_override = SubResource( 1 )
@@ -47,6 +52,7 @@ can_sleep = false
 script = ExtResource( 4 )
 
 [node name="Hitbox" type="Area" parent="."]
+visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70373, 1.62545 )
@@ -83,6 +89,7 @@ material/0 = SubResource( 8 )
 
 [node name="Seat1" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.33141, 4.92939 )
+visible = false
 
 [node name="FirstPersonCamera" parent="Seat1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )

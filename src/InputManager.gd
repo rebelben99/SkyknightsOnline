@@ -3,6 +3,7 @@ extends Node
 
 var actions = {
     # misc
+    'open_menu': {'key': KEY_ASCIITILDE},
     'exit': {'key': KEY_ESCAPE},
     'free_mouse': {'key': KEY_ALT},
     'toggle_camera_mode': {'key': KEY_T},
@@ -36,8 +37,9 @@ var actions = {
     'select_item_1': {'key': KEY_1},
     'select_item_2': {'key': KEY_2},
     'select_item_3': {'key': KEY_3},
+    'select_item_4': {'key': KEY_4},
+    'select_item_5': {'key': KEY_5},
     'activate_abilty': {'key': KEY_F},
-    
 }
 
 signal input_event(action, state)

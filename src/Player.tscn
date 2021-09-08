@@ -1,37 +1,212 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
+[ext_resource path="res://src/FpsCounter.gd" type="Script" id=2]
+[ext_resource path="res://src/ui/reload_under.png" type="Texture" id=3]
+[ext_resource path="res://src/ui/reload_progress.png" type="Texture" id=4]
+[ext_resource path="res://addons/RadialMenu/RadialMenu.gd" type="Script" id=5]
 
 [node name="Player" type="Spatial"]
 script = ExtResource( 1 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="Panel" type="Panel" parent="HUD"]
+[node name="WeaponInfo" type="VBoxContainer" parent="HUD"]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -40.0
-margin_top = -100.0
-margin_right = 40.0
-margin_bottom = -40.0
+anchor_bottom = 0.5
+margin_left = 80.0
+margin_top = -50.0
+margin_right = 80.0
+hint_tooltip = "tooltip"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HUD/Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Ammo" type="Label" parent="HUD/Panel/VBoxContainer"]
-margin_right = 40.0
+[node name="Name" type="Label" parent="HUD/WeaponInfo"]
+margin_right = 146.0
 margin_bottom = 14.0
+text = "Weapon Name"
 
-[node name="Health" type="Label" parent="HUD/Panel/VBoxContainer"]
+[node name="Ammo" type="HBoxContainer" parent="HUD/WeaponInfo"]
 margin_top = 18.0
-margin_right = 40.0
+margin_right = 146.0
 margin_bottom = 32.0
+
+[node name="Spacer" type="Label" parent="HUD/WeaponInfo/Ammo"]
+margin_right = 20.0
+margin_bottom = 14.0
+text = "     "
+
+[node name="Magazine" type="Label" parent="HUD/WeaponInfo/Ammo"]
+margin_left = 24.0
+margin_right = 85.0
+margin_bottom = 14.0
+text = "magazine"
+
+[node name="Divider" type="Label" parent="HUD/WeaponInfo/Ammo"]
+margin_left = 89.0
+margin_right = 94.0
+margin_bottom = 14.0
+text = "/"
+
+[node name="Reserve" type="Label" parent="HUD/WeaponInfo/Ammo"]
+margin_left = 98.0
+margin_right = 146.0
+margin_bottom = 14.0
+text = "reserve"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="TextureRect" parent="HUD"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -40.0
+margin_right = 80.0
+margin_bottom = 40.0
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ReloadIndicator" type="TextureProgress" parent="HUD"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -64.0
+margin_top = -64.0
+margin_right = 64.0
+margin_bottom = 64.0
+value = 55.0
+texture_under = ExtResource( 3 )
+texture_progress = ExtResource( 4 )
+fill_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SeatingDiagram" type="Control" parent="HUD"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health" type="Label" parent="HUD/SeatingDiagram"]
+margin_left = -256.0
+margin_bottom = 10.0
+custom_colors/font_color = Color( 0.317647, 0.772549, 0.356863, 1 )
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Progress" type="TextureProgress" parent="HUD/SeatingDiagram"]
+margin_left = -256.0
+margin_top = -256.0
+fill_mode = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Debug" type="PanelContainer" parent="HUD"]
+margin_right = 14.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="HUD/Debug"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 7.0
+margin_bottom = 75.0
+
+[node name="FpsCounter" type="Label" parent="HUD/Debug/VBox"]
+margin_bottom = 14.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MouseOver" type="Label" parent="HUD/Debug/VBox"]
+margin_top = 18.0
+margin_bottom = 32.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Throttle" type="Label" parent="HUD/Debug/VBox"]
+margin_top = 36.0
+margin_bottom = 50.0
+
+[node name="Velocity" type="Label" parent="HUD/Debug/VBox"]
+margin_top = 54.0
+margin_bottom = 68.0
+
+[node name="Radial" type="Popup" parent="HUD"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -150.0
+margin_right = 150.0
+margin_bottom = 72.2631
+rect_min_size = Vector2( 300, 222.263 )
+rect_pivot_offset = Vector2( 150, 150 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menus" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" type="PanelContainer" parent="Menus"]
+anchor_right = 1.0
+margin_bottom = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menus/MainMenu"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 93.0
+alignment = 2
+
+[node name="Settings" type="Button" parent="Menus/MainMenu/HBoxContainer"]
+margin_left = 891.0
+margin_right = 954.0
+margin_bottom = 86.0
+text = "Settings"
+
+[node name="Control" type="Control" parent="Menus/MainMenu/HBoxContainer"]
+margin_left = 958.0
+margin_right = 958.0
+margin_bottom = 86.0
+
+[node name="VSeparator" type="VSeparator" parent="Menus/MainMenu/HBoxContainer"]
+margin_left = 962.0
+margin_right = 966.0
+margin_bottom = 86.0
+
+[node name="Quit" type="Button" parent="Menus/MainMenu/HBoxContainer"]
+margin_left = 970.0
+margin_right = 1010.0
+margin_bottom = 86.0
+text = "Quit"
+
+[node name="Map" type="CanvasLayer" parent="."]

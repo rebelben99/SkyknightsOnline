@@ -89,12 +89,3 @@ func _process(delta):
 
     var current_rot = $Pedestal.rotation_degrees.y
     $Pedestal.rotation_degrees.y = lerp(current_rot, pedestal_rotation, delta)
-
-func get_object_under_mouse():
-    var mouse_pos = get_viewport().get_mouse_position()
-    var camera = get_viewport().get_camera()
-    var ray_from = camera.project_ray_origin(mouse_pos)
-    var ray_to = ray_from + camera.project_ray_normal(mouse_pos) * 100
-    var space_state = get_world().direct_space_state
-    var selection = space_state.intersect_ray(ray_from, ray_to)
-    return selection

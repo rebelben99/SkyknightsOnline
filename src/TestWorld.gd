@@ -1,9 +1,7 @@
 extends Spatial
 
 func _ready():
-    $Player.ship = $Reaver
-    $Reaver/HealthBar.hide()
-    $Player.update_camera_mode()
+    $Player.enter_ship($Reaver)
 
 func _process(delta):
    pass

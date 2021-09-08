@@ -1,51 +1,56 @@
-extends RigidBody
-
-var ship_dir = "res://src/ships/reaver/"
-
-var slots = {
-    'weapons': {
-        'nosegun': {
-            'none': null,
-            'mustang': "weapons/mustang/Mustang.tscn",
-            'vortek': "weapons/vortek/Vortek.tscn",
-        },
-        'pylons': {
-            'none': null,
-            'tanks': "weapons/tanks/Tanks.tscn",
-            'rocket_pods': "weapons/rocket_pods/RocketPods.tscn",
-        },
-    }
-}
-
-var inventory = {
-    'weapons': {
-        'nosegun': null,
-        'pylons': null,
-    }
-}
+extends 'res://src/ships/BaseShip.gd'
 
 var max_health = 3000
 var current_health = max_health
 
 export(String, 'none', 'mustang', 'vortek') var nosegun = 'none'
 
-var pitch_input = 0.0
-var yaw_input = 0.0
-var roll_input = 0.0
-var input_state = {}
-
 func _ready():
+    ship_dir = 'res://src/ships/reaver/'
+    seating_diagram = ship_dir + 'reaver_seating_diagram.png'
+    seating_diagram_outline = ship_dir + 'reaver_seating_diagram_outline.png'
+
+    slots = {
+        'weapons': {
+            'nosegun': {
+                'none': null,
+                'mustang': "weapons/mustang/Mustang.tscn",
+                'vortek': "weapons/vortek/Vortek.tscn",
+            },
+            'pylons': {
+                'none': null,
+                'tanks': "weapons/tanks/Tanks.tscn",
+                'rocket_pods': "weapons/rocket_pods/RocketPods.tscn",
+            },
+        }
+    }
+
+    inventory = {
+        'weapons': {
+            'nosegun': null,
+            'pylons': null,
+        }
+    }
+
     mass = 10
     linear_damp = 1
     angular_damp = 3
 
-    $Cockpit.hide()
+    $Engine.max_speed = 150
+    $Engine.acceleration = 0.6
+    $Engine.hover_thrust = 45
+    $Engine.up_thrust = 500
+    $Engine.down_thrust = 300
+    $Engine.vertical_decay = 0.98
+    $Engine.throttle_accel = 15
+    $Engine.throttle_brake = 20
+    $Engine.throttle_max = 1000
+    $Engine.pitch_speed = 75
+    $Engine.roll_speed = 75
+    $Engine.yaw_speed = 15
 
     if nosegun != 'none':
         equip('weapons', 'nosegun', nosegun)
-
-    for action in InputManager.actions:
-        input_state[action] = false
 
 func set_camera(number=1):
     if number:
@@ -64,40 +69,13 @@ func set_freelook(pos):
 func reset_freelook():
     $Seat1/FirstPersonCamera.reset()
 
-func equip(category, item_type, item_name):
-    if !(category in slots):
-        return
-    if !(item_type in slots[category]):
-        return
-    if !(item_name in slots[category][item_type]):
-        return
+func switch_weapon(number):
+    print(number)
 
-    if inventory[category][item_type]:
-        var prev_item = inventory[category][item_type]
-        if prev_item:
-            prev_item.queue_free()
-
-    var item_dir = slots[category][item_type][item_name]
-    if !item_dir:
-        inventory[category][item_type] = null
-        return
-    
-    var item = load(ship_dir + item_dir).instance()
-    inventory[category][item_type] = item
-    if item_type == 'nosegun':
-        $Nosegun.add_child(item)
-    if item_type == 'pylons':
-        $Pylons.add_child(item)
+func give_ammo():
+    print('getting ammo')
+    current_weapon.give_ammo()
 
 func _process(delta):
-    if $Nosegun.get_child_count():
-        if input_state['reload']:
-            $Nosegun.get_child(0).reload()
-        var weapon = $Nosegun.get_child(0)
-        weapon.update(delta, input_state['fire_primary'])
-
-func _physics_process(delta):
-    $Engine.calculate_forces(input_state, pitch_input, yaw_input, roll_input)
-
-    apply_torque_impulse($Engine.torque * delta)
-    apply_central_impulse($Engine.velocity * delta)
+    if current_health <= 0:
+        queue_free()

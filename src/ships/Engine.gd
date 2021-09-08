@@ -1,5 +1,6 @@
 extends Spatial
 
+# these control the ship's handling
 export var max_speed = 150
 export var acceleration = 0.6
 
@@ -16,6 +17,7 @@ export var pitch_speed = 100
 export var roll_speed = 100
 export var yaw_speed = 20
 
+# internal use
 var up = 0
 var velocity = Vector3.ZERO
 var torque = Vector3.ZERO
@@ -23,13 +25,6 @@ var throttle = 0
 var pitch = 0.0
 var yaw = 0.0
 var roll = 0.0
-
-func _ready():
-    pass 
-
-
-#func _process(delta):
-#    pass
 
 func calculate_forces(input, pitch_input, yaw_input, roll_input):
     var angle = global_transform.basis.get_euler()
