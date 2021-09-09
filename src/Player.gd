@@ -10,12 +10,17 @@ var input_state = {}
 
 func _ready():
     InputManager.connect('input_event', self, '_handle_input_event')
+    MainMenu.MouseSens.connect('text_changed', self, 'mouse_sens_changed')
     update_mouse_capture()
     update_camera_mode()
     HUD.Radial.connect('item_selected', self, 'radial_item_selected')
     
     for action in InputManager.actions:
         input_state[action] = false
+
+func mouse_sens_changed(sens):
+    if sens:
+        mouse_sens = Vector2(float(sens), float(sens))
 
 func radial_item_selected(id, pos):
     print(id, pos)

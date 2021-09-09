@@ -46,6 +46,34 @@ margin_right = 1010.0
 margin_bottom = 42.0
 alignment = 2
 
+[node name="VBoxContainer" type="VBoxContainer" parent="Bar/System"]
+margin_left = 503.0
+margin_right = 581.0
+margin_bottom = 42.0
+
+[node name="Label" type="Label" parent="Bar/System/VBoxContainer"]
+margin_right = 78.0
+margin_bottom = 14.0
+text = "mouse sens"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MouseSens" type="LineEdit" parent="Bar/System/VBoxContainer"]
+margin_top = 18.0
+margin_right = 78.0
+margin_bottom = 42.0
+text = "5"
+
+[node name="VSeparator3" type="VSeparator" parent="Bar/System"]
+margin_left = 585.0
+margin_right = 589.0
+margin_bottom = 42.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Connect" type="Button" parent="Bar/System"]
 margin_left = 593.0
 margin_right = 657.0
