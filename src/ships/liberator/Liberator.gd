@@ -1,7 +1,5 @@
 extends 'res://src/ships/BaseShip.gd'
 
-var max_health = 4500
-var current_health = max_health
 
 export(String, 'none', 'tank_buster', 'vektor', 'spur') var nosegun = 'none'
 
@@ -9,7 +7,7 @@ func _ready():
     ship_dir = 'res://src/ships/liberator/'
     seating_diagram = ship_dir + 'liberator_seating_diagram.png'
     seating_diagram_outline = ship_dir + 'liberator_seating_diagram_outline.png'
-
+    
     slots = {
         'weapons': {
             'nosegun': {
@@ -43,6 +41,9 @@ func _ready():
         1: {'occupied': false},
         2: {'occupied': false},
     }
+
+    max_health = 4500
+    current_health = max_health
 
     mass = 20
     linear_damp = 1
@@ -85,10 +86,6 @@ func enter_seat(seat_number):
 
 func reset_freelook():
     $Seat1/FirstPersonCamera.reset()
-
-func _process(delta):
-    if current_health <= 0:
-        queue_free()
 
 func _physics_process(delta):
     if current_weapon:

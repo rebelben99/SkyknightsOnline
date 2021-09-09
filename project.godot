@@ -25,10 +25,10 @@ Console="*res://addons/quentincaffeino/console/src/Console.tscn"
 
 gdscript/warnings/unassigned_variable=false
 gdscript/warnings/unused_variable=false
-multirun/number_of_windows=4
+multirun/number_of_windows=3
 multirun/add_custom_args=true
-multirun/first_window_args="--server=1"
-multirun/other_window_args=""
+multirun/first_window_args="--server=1 "
+multirun/other_window_args="--connect=1"
 multirun/window_distance=200
 
 [editor_plugins]

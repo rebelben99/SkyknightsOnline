@@ -3,7 +3,7 @@ extends Node
 var peer = null
 
 const SERVER_PORT = 9099
-const SERVER_ADDRESS = 'localhost'
+const SERVER_ADDRESS = 'skyknights.daelon.net'
 const MAX_PLAYERS = 10
 
 onready var scenes = {
@@ -41,7 +41,7 @@ func _ready():
         client_init()
         MainMenu.Spawn.connect('spawn_pressed', self, 'spawn_pressed')
     else:
-        # $ServerUI.hide()
+        $ServerUI.hide()
         MainMenu.connect('connect_pressed', self, 'on_connect_pressed')
         MainMenu.Spawn.hide()
         load_world('hangar')
@@ -156,7 +156,11 @@ remotesync func spawn_ship(id, data):
     display_name += data['name']
     $ServerUI/ShipList.add_item(display_name)
 
-
 func _physics_process(delta):
-    pass
+    if is_network_master():
+        for ship in get_tree().get_nodes_in_group('ships'):
+            if ship.dead:
+                $Players.get_node(ship.name).leave_ship()
+                ship.rpc('kill')
+
 

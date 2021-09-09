@@ -1,8 +1,5 @@
 extends 'res://src/ships/BaseShip.gd'
 
-var max_health = 8000
-var current_health = max_health
-
 func _ready():
     ship_dir = 'res://src/ships/galaxy/'
     seating_diagram = ship_dir + 'galaxy_seating_diagram.png'
@@ -15,6 +12,9 @@ func _ready():
 
     inventory = {
     }
+    
+    max_health = 8000
+    current_health = max_health
 
     mass = 40
     linear_damp = 1
@@ -37,7 +37,3 @@ func _ready():
 
     for action in InputManager.actions:
         input_state[action] = false
-
-func _process(delta):
-    if current_health <= 0:
-        queue_free()

@@ -61,7 +61,7 @@ func enter_ship(new_ship):
     if ship:
         print('already in a ship?')
     ship = new_ship
-    ship.healthbar.hide()
+    # ship.healthbar.hide()
     update_camera_mode()
     if ship.get('seating_diagram') and ship.get('seating_diagram_outline'):
         HUD.SeatingDiagram.show()
@@ -75,7 +75,7 @@ func enter_ship(new_ship):
             HUD.Crosshair.texture = load(ship.current_weapon.crosshair)
 
 func leave_ship():
-    ship.healthbar.show()
+    # ship.healthbar.show()
     ship = null
     
     HUD.SeatingDiagram.hide()
@@ -118,7 +118,11 @@ func _handle_input_event(action, state):
         'exit':
             get_tree().quit()
 
+
+var previous_state = {}
+var current_time = 0.0
 func _physics_process(delta):
+    current_time += delta
     var pitch = 0
     var roll = 0
     var mouse_delta = InputManager.get_mouse() * delta
@@ -144,7 +148,23 @@ func _physics_process(delta):
         input_state['roll'] = roll
         input_state['yaw'] = 0
 
-        rpc_unreliable_id(1, 'network_update', input_state)
+        var state_diff = {}
+
+        for action in input_state:
+            if action in previous_state:
+                pass
+            else:
+                previous_state[action] = null
+
+            if previous_state[action] != input_state[action]:
+                state_diff[action] = input_state[action]
+                previous_state[action] = input_state[action]
+
+        if current_time > 0.5:
+            current_time = 0.0
+            rpc_unreliable_id(1, 'network_update', input_state)
+        else:
+            rpc_unreliable_id(1, 'network_update', state_diff)
 
 remotesync func apply_input(input):
     if ship:

@@ -1,8 +1,5 @@
 extends 'res://src/ships/BaseShip.gd'
 
-var max_health = 3000
-var current_health = max_health
-
 export(String, 'none', 'mustang', 'vortek') var nosegun = 'none'
 
 func _ready():
@@ -32,6 +29,9 @@ func _ready():
         }
     }
 
+    max_health = 3000
+    current_health = max_health
+    
     mass = 10
     linear_damp = 1
     angular_damp = 3
@@ -74,10 +74,6 @@ func switch_weapon(number):
 
 func give_ammo():
     current_weapon.give_ammo()
-
-func _process(delta):
-    if current_health <= 0:
-        queue_free()
 
 func _physics_process(delta):
     if current_weapon:

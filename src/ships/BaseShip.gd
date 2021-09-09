@@ -5,19 +5,27 @@ var ship_dir = ''
 var seating_diagram = ''
 var seating_diagram_outline = ''
 
+var max_health = 100
+sync var current_health = max_health
+
 var slots = {}
 var inventory = {}
 var seats = {
     0: {'occupied': false},
 }
 
+sync var server_transform = Transform()
+var interpolation_active = true
+
 var input_state = {} setget set_input
 
 var current_weapon = null
+sync var dead = false
 
 onready var healthbar = $HealthBar
 
 func _ready():
+    add_to_group('ships')
     $Cockpit.hide()
 
     for action in InputManager.actions:
@@ -25,6 +33,9 @@ func _ready():
     input_state['pitch'] = 0.0
     input_state['roll'] = 0.0
     input_state['yaw'] = 0.0
+
+    if !is_network_master():
+        server_transform = transform
 
 func equip(category, item_type, item_name):
     if !(category in slots):
@@ -58,7 +69,34 @@ func set_input(input):
     for action in input:
         input_state[action] = input[action]
 
+func do_damage(amount):
+    current_health -= amount
+    if is_network_master():
+        rset_unreliable('current_health', current_health)
+        if current_health <= 0:
+            rset('dead', true)
+
+remotesync func kill():
+    queue_free()
+
 func _physics_process(delta):
+    if is_network_master():
+        rset_unreliable('server_transform', transform)
+    else:
+        if interpolation_active:
+            # Interpolates the transform. 
+            # We are sending packets 60 times per second
+            # But most likely we won't receive 60 packets per second, some packets may get lost
+            # some may reach at the same frame
+            # So I tried to do this "by the book" andcouldn't figure it out completely,instead
+            # I apply an interpolation based on the distance		
+            var scale_factor = 0.1
+            var dist = transform.origin.distance_squared_to(server_transform.origin)
+            var weight = clamp(pow(2, dist/4) * scale_factor, 0.0, 1.0)
+            transform = transform.interpolate_with(server_transform, weight)
+        else:
+            transform = server_transform
+
     $Engine.calculate_forces(input_state)
 
     apply_torque_impulse($Engine.torque * delta)
