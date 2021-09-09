@@ -109,7 +109,6 @@ transform = Transform( 1, 0, 0, 0, 0.984313, -0.176432, 0, 0.176432, 0.984313, 0
 
 [node name="Camera" type="Camera" parent="Seat1/ThirdPersonCamera/InnerGimbal2"]
 transform = Transform( -1, -1.77636e-15, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 7.39837, -1.32611 )
-current = true
 fov = 74.0
 far = 10000.0
 
