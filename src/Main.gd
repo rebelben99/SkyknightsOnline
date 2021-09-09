@@ -142,6 +142,9 @@ func spawn_pressed(data):
     rpc('spawn_ship', id, data)
 
 remotesync func spawn_ship(id, data):
+    if $Ships.get_node(str(id)):
+        return
+
     if data['name'] in ships:
         var ship = ships[data['name']].instance()
         ship.name = str(id)
@@ -162,5 +165,3 @@ func _physics_process(delta):
             if ship.dead:
                 $Players.get_node(ship.name).leave_ship()
                 ship.rpc('kill')
-
-
