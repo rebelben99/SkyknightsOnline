@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/healthbar_red.png-67989a371aa5a93a6f624a8d78fab14b.stex"
+path="res://.import/reload_progress.png-ed699c2036c7c3182189cce54c512203.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/ui/healthbar_red.png"
-dest_files=[ "res://.import/healthbar_red.png-67989a371aa5a93a6f624a8d78fab14b.stex" ]
+source_file="res://src/ui/hud/reload_progress.png"
+dest_files=[ "res://.import/reload_progress.png-ed699c2036c7c3182189cce54c512203.stex" ]
 
 [params]
 

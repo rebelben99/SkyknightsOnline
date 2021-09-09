@@ -4,7 +4,7 @@
 [ext_resource path="res://src/ships/galaxy/galaxy_cockpit.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://src/ships/galaxy/galaxy_chassis.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/ui/HealthBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2, 2, 2 )

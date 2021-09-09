@@ -5,7 +5,7 @@
 [ext_resource path="res://src/ships/FirstPersonCamera.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/ships/ThirdPersonCamera.gd" type="Script" id=4]
 [ext_resource path="res://src/ships/liberator/Liberator.gd" type="Script" id=5]
-[ext_resource path="res://src/ui/HealthBar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape" id=8]

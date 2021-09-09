@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Main.gd" type="Script" id=2]
+
+[node name="Main" type="Node"]
+script = ExtResource( 2 )
+
+[node name="ServerUI" type="Control" parent="."]
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PeerList" type="ItemList" parent="ServerUI"]
+margin_right = 128.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShipList" type="ItemList" parent="ServerUI"]
+margin_left = 128.0
+margin_right = 256.0
+margin_bottom = 256.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Players" type="Node" parent="."]
+
+[node name="World" type="Node" parent="."]
+
+[node name="Ships" type="Node" parent="."]

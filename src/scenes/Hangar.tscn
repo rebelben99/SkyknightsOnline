@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
-[ext_resource path="res://src/Hangar.gd" type="Script" id=2]
+[ext_resource path="res://src/scenes/Hangar.gd" type="Script" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.34902, 0.34902, 0.34902, 1 )
@@ -88,33 +88,24 @@ spot_angle = 26.8
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="ShipSelector" type="ItemList" parent="UI"]
+margin_right = 120.0
+margin_bottom = 180.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PrimarySelector" type="ItemList" parent="UI"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -120.0
-margin_top = -180.0
+margin_left = 120.0
+margin_right = 240.0
+margin_bottom = 180.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SecondarySelector" type="ItemList" parent="UI"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -240.0
-margin_top = -180.0
-margin_right = -120.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ShipSelector" type="ItemList" parent="UI"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -120.0
+margin_left = 240.0
+margin_right = 360.0
 margin_bottom = 180.0
 __meta__ = {
 "_edit_use_anchors_": false

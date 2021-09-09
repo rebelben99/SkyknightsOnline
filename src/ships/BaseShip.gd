@@ -11,10 +11,7 @@ var seats = {
     0: {'occupied': false},
 }
 
-var pitch_input = 0.0
-var yaw_input = 0.0
-var roll_input = 0.0
-var input_state = {}
+var input_state = {} setget set_input
 
 var current_weapon = null
 
@@ -25,6 +22,9 @@ func _ready():
 
     for action in InputManager.actions:
         input_state[action] = false
+    input_state['pitch'] = 0.0
+    input_state['roll'] = 0.0
+    input_state['yaw'] = 0.0
 
 func equip(category, item_type, item_name):
     if !(category in slots):
@@ -54,8 +54,12 @@ func equip(category, item_type, item_name):
     if item_type == 'bellygun':
         $Bellygun.add_child(item)
 
+func set_input(input):
+    for action in input:
+        input_state[action] = input[action]
+
 func _physics_process(delta):
-    $Engine.calculate_forces(input_state, pitch_input, yaw_input, roll_input)
+    $Engine.calculate_forces(input_state)
 
     apply_torque_impulse($Engine.torque * delta)
     apply_central_impulse($Engine.velocity * delta)

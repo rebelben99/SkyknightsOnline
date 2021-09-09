@@ -89,3 +89,9 @@ func reset_freelook():
 func _process(delta):
     if current_health <= 0:
         queue_free()
+
+func _physics_process(delta):
+    if current_weapon:
+        current_weapon.firing = input_state['fire_primary']
+        if input_state['reload']:
+            current_weapon.reload()

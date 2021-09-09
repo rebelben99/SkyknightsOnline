@@ -2,9 +2,9 @@ extends Sprite3D
 
 onready var healthbar = $Viewport/HealthBar2D
 
-var bar_red = preload("res://src/ui/healthbar_red.png")
-var bar_green = preload("res://src/ui/healthbar_green.png")
-var bar_yellow = preload("res://src/ui/healthbar_yellow.png")
+var bar_red = preload("res://src/ui/healthbar/healthbar_red.png")
+var bar_green = preload("res://src/ui/healthbar/healthbar_green.png")
+var bar_yellow = preload("res://src/ui/healthbar/healthbar_yellow.png")
 var auto = false
 
 func _ready():

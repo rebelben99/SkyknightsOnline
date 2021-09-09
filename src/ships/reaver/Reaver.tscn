@@ -7,7 +7,7 @@
 [ext_resource path="res://src/ships/FirstPersonCamera.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ships/reaver/cosmetics/fins.obj" type="ArrayMesh" id=6]
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/ui/HealthBar.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=9]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
@@ -89,10 +89,10 @@ material/0 = SubResource( 8 )
 
 [node name="Seat1" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.33141, 4.92939 )
-visible = false
 
 [node name="FirstPersonCamera" parent="Seat1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+visible = true
 
 [node name="InnerGimbal2" type="Spatial" parent="Seat1/FirstPersonCamera"]
 

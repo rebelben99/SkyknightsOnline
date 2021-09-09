@@ -26,7 +26,7 @@ var pitch = 0.0
 var yaw = 0.0
 var roll = 0.0
 
-func calculate_forces(input, pitch_input, yaw_input, roll_input):
+func calculate_forces(input):
     var angle = global_transform.basis.get_euler()
     var attitude = max(abs(angle.x), abs(angle.z))
     var hover_factor = 1 - (attitude / 2)
@@ -47,7 +47,7 @@ func calculate_forces(input, pitch_input, yaw_input, roll_input):
     velocity.y = up
     velocity.z = throttle
 
-    pitch = clamp(pitch_input, -1, 1)
+    pitch = clamp(input['pitch'], -1, 1)
     if input['pitch_up']:
         pitch += -1
     if input['pitch_down']:
@@ -55,7 +55,7 @@ func calculate_forces(input, pitch_input, yaw_input, roll_input):
     pitch = clamp(pitch, -1, 1)
     torque.x = pitch * pitch_speed
 
-    yaw = clamp(yaw_input, -1, 1)
+    yaw = clamp(input['yaw'], -1, 1)
     if input['yaw_left']:
         yaw += 1
     if input['yaw_right']:
@@ -63,7 +63,7 @@ func calculate_forces(input, pitch_input, yaw_input, roll_input):
     yaw = clamp(yaw, -1, 1)
     torque.y = yaw * yaw_speed
 
-    roll = clamp(roll_input, -1, 1)
+    roll = clamp(input['roll'], -1, 1)
     if input['roll_left']:
         roll += -1
     if input['roll_right']:
