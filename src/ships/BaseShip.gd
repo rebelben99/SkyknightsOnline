@@ -15,6 +15,8 @@ var seats = {
 }
 
 sync var server_transform = Transform()
+sync var server_linear_velocity = Vector3()
+sync var server_angular_velocity = Vector3()
 var interpolation_active = true
 
 var input_state = {} setget set_input
@@ -72,7 +74,6 @@ func set_input(input):
 func do_damage(amount):
     current_health -= amount
     if is_network_master():
-        rset_unreliable('current_health', current_health)
         if current_health <= 0:
             rset('dead', true)
 
@@ -82,14 +83,9 @@ remotesync func kill():
 func _physics_process(delta):
     if is_network_master():
         rset_unreliable('server_transform', transform)
+        rset_unreliable('current_health', current_health)
     else:
-        if interpolation_active:
-            # Interpolates the transform. 
-            # We are sending packets 60 times per second
-            # But most likely we won't receive 60 packets per second, some packets may get lost
-            # some may reach at the same frame
-            # So I tried to do this "by the book" andcouldn't figure it out completely,instead
-            # I apply an interpolation based on the distance		
+        if interpolation_active:		
             var scale_factor = 0.1
             var dist = transform.origin.distance_squared_to(server_transform.origin)
             var weight = clamp(pow(2, dist/4) * scale_factor, 0.0, 1.0)
