@@ -12,7 +12,3 @@ func _ready():
     WeaponInfo.hide()
     Crosshair.hide()
     ReloadIndicator.hide()
-    # Debug.hide()
-
-# func _process(delta):
-#    pass

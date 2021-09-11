@@ -1,6 +1,6 @@
 extends Spatial
 
-var mouse_sens = Vector2(5, 5)
+var mouse_sens = Vector2(1, 1)
 var ship = null
 var seat = null
 var first_person = true
@@ -10,7 +10,7 @@ var input_state = {}
 
 func _ready():
     InputManager.connect('input_event', self, '_handle_input_event')
-    MainMenu.MouseSens.connect('text_changed', self, 'mouse_sens_changed')
+    Settings.MouseFlight.connect('value_changed', self, 'mouse_sens_changed')
     update_mouse_capture()
     update_camera_mode()
     HUD.Radial.connect('item_selected', self, 'radial_item_selected')
@@ -105,12 +105,12 @@ func get_object_under_mouse():
     var selection = space_state.intersect_ray(ray_from, ray_to, [], 0x7FFFFFFF, true, true)
     return selection
 
-func _input(event):
-    if !capture_mouse:
-        if event is InputEventMouseButton:
-            if event.button_index == BUTTON_RIGHT and event.pressed:
-                print(get_object_under_mouse()['collider'].get_parent().name)
-                HUD.Radial.open_menu(get_viewport().get_mouse_position())
+#func _input(event):
+#    if !capture_mouse:
+#        if event is InputEventMouseButton:
+#            if event.button_index == BUTTON_RIGHT and event.pressed:
+#                print(get_object_under_mouse()['collider'].get_parent().name)
+#                HUD.Radial.open_menu(get_viewport().get_mouse_position())
 
 func _handle_input_event(action, state):
     match action:
@@ -120,6 +120,8 @@ func _handle_input_event(action, state):
             toggle_mouse_capture(state)
         'freelook':
             set_freelook(state)
+        'open_menu':
+            print('menu')
         'exit':
             get_tree().quit()
 
@@ -152,6 +154,11 @@ func _physics_process(delta):
         input_state['pitch'] = pitch
         input_state['roll'] = roll
         input_state['yaw'] = 0
+
+    
+        # if !GameManager.connected:
+        #     apply_input(input_state)
+        #     return
 
         var state_diff = {}
 
@@ -192,5 +199,5 @@ func _process(delta):
 
         HUD.SeatingDiagram.health = ship.current_health
 
-        # HUD.Debug/VBox/Throttle.text = 'throttle: ' + str(ship.get_node('Engine').throttle)
-        # HUD.Debug/VBox/Velocity.text = 'speed: ' + str(ship.linear_velocity.length())
+        HUD.Debug.Throttle.text = 'throttle: ' + str(ship.get_node('Engine').throttle)
+        HUD.Debug.Velocity.text = 'speed: ' + str(ship.linear_velocity.length())

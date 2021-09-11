@@ -9,6 +9,12 @@ var ships = {
             'vortek',
         ],
     },
+    'mosquito': {
+        'noseguns': [
+            'needler',
+            'rotary',
+        ],
+    },
     'liberator': {
         'noseguns': [
             'tank_buster',
@@ -19,6 +25,7 @@ var ships = {
 
 func _ready():
     $Ship.connect('item_selected', self, 'on_ship_selected')
+    $Spawn.connect('pressed', self, '_on_spawn_pressed')
     for ship in ships:
         $Ship.add_item(ship)
 
@@ -31,7 +38,7 @@ func on_ship_selected(index):
     for gun in ships[ship]['noseguns']:
         $Nosegun.add_item(gun)
 
-func _on_Spawn_pressed():
+func _on_spawn_pressed():
     var ship = $Ship.get_item_text($Ship.selected)
     var nosegun = $Nosegun.get_item_text($Nosegun.selected)
 

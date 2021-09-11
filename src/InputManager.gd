@@ -3,8 +3,10 @@ extends Node
 
 var actions = {
     # misc
-    'open_menu': {'key': KEY_ASCIITILDE},
+    'open_menu': {'key': KEY_QUOTELEFT},
+    'settings': {'key': KEY_BACKSLASH},
     'exit': {'key': KEY_ESCAPE},
+    # 'console': {'key': KEY_QUOTE_LEFT},
     'free_mouse': {'key': KEY_ALT},
     'toggle_camera_mode': {'key': KEY_T},
     'freelook': {'mouse': BUTTON_MIDDLE},
@@ -47,7 +49,6 @@ var state = {}
 var mouse_delta = Vector2()
 
 func register_actions():
-
     for action in actions:
         var control = actions[action]
         InputMap.add_action(action)

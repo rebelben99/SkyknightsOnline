@@ -123,7 +123,8 @@ __meta__ = {
 [node name="Debug" type="PanelContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -60.0
+margin_left = -100.0
+margin_bottom = 100.0
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -132,11 +133,11 @@ __meta__ = {
 [node name="VBox" type="VBoxContainer" parent="Debug"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 53.0
-margin_bottom = 75.0
+margin_right = 93.0
+margin_bottom = 93.0
 
 [node name="FpsCounter" type="Label" parent="Debug/VBox"]
-margin_right = 46.0
+margin_right = 86.0
 margin_bottom = 14.0
 script = ExtResource( 4 )
 __meta__ = {
@@ -145,7 +146,7 @@ __meta__ = {
 
 [node name="MouseOver" type="Label" parent="Debug/VBox"]
 margin_top = 18.0
-margin_right = 46.0
+margin_right = 86.0
 margin_bottom = 32.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -153,12 +154,12 @@ __meta__ = {
 
 [node name="Throttle" type="Label" parent="Debug/VBox"]
 margin_top = 36.0
-margin_right = 46.0
+margin_right = 86.0
 margin_bottom = 50.0
 
 [node name="Velocity" type="Label" parent="Debug/VBox"]
 margin_top = 54.0
-margin_right = 46.0
+margin_right = 86.0
 margin_bottom = 68.0
 
 [node name="Radial" type="Popup" parent="."]

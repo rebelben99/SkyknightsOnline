@@ -15,6 +15,7 @@ onready var scenes = {
 
 onready var ships = {
     'reaver': preload("res://src/ships/reaver/Reaver.tscn"),
+    'mosquito': preload("res://src/ships/mosquito/Mosquito.tscn"),
     'liberator': preload("res://src/ships/liberator/Liberator.tscn"),
 }
 
@@ -32,8 +33,10 @@ func parse_cmd_args():
 
 func _ready():
     var args = parse_cmd_args()
+    $ServerUI.hide()
 
     if args['server']:
+        $ServerUI.show()
         server_init()
         OS.set_window_title('Skyknights Online - Server')
         MainMenu.hide()
@@ -41,16 +44,22 @@ func _ready():
         client_init()
         MainMenu.Spawn.connect('spawn_pressed', self, 'spawn_pressed')
     else:
-        $ServerUI.hide()
-        MainMenu.connect('connect_pressed', self, 'on_connect_pressed')
+        MainMenu.Connect.connect('pressed', self, 'on_connect_pressed')
+        MainMenu.Local.connect('pressed', self, 'on_local_pressed')
         MainMenu.Spawn.hide()
         load_world('hangar')
         MainMenu.Spawn.connect('spawn_pressed', self, 'spawn_pressed')
+
+func on_local_pressed():
+    load_world('test_world')
+    create_player(0)
+    MainMenu.Spawn.show()
 
 func server_init():
     peer = NetworkedMultiplayerENet.new()
     peer.create_server(SERVER_PORT, MAX_PLAYERS - 1)
     get_tree().network_peer = peer
+    GameManager.connected = true
     
     get_tree().connect("network_peer_connected", self, "_on_client_connected")
     get_tree().connect("network_peer_disconnected", self, "_on_client_disconnected")
@@ -69,20 +78,26 @@ func client_init():
     get_tree().connect("connection_failed", self, "_on_connection_failed")
     get_tree().connect("server_disconnected", self, "_on_server_disconnected")
 
-func load_world(name):
+remote func load_world(name):
     if $World.get_child_count():
         $World.get_child(0).queue_free()
     var world = scenes[name].instance()
     $World.add_child(world)
+    if world.get_node('Camera'):
+        world.get_node('Camera').current = true
 
 func _on_connected_to_server():
-    var id = get_tree().get_network_unique_id()
+    GameManager.connected = true
+    var id = GameManager.network_id
     MainMenu.ID.text = str(id)
     MainMenu.Connect.disabled = true
     MainMenu.Spawn.show()
     rpc('create_player', id)
+    var name = MainMenu.UserName.text
+    rpc_id(1, 'set_username', name)
 
-    load_world('test_world')
+remote func set_username(name):
+    print(name)
 
 func _on_server_disconnected():
     get_tree().quit()
@@ -102,20 +117,25 @@ func _on_peer_disconnected(id):
 
 func _on_client_connected(id):
     rpc('create_player', id)
-    $ServerUI/PeerList.add_item(str(id))
+
+    rpc_id(id, 'load_world', 'test_world')
+    for ship in get_tree().get_nodes_in_group('ships'):
+        rpc_id(id, 'spawn_ship', ship.name, ship.data)
 
 func _on_client_disconnected(id):
     rpc('remove_player', id)
 
 remotesync func create_player(id):
-    var player
+    var player         
 
-    if id == get_tree().get_network_unique_id():
+    if id == GameManager.network_id:
         player = scenes['player'].instance()
+        player.set_network_master(GameManager.network_id)
     else:
         player = scenes['peer'].instance()
 
     player.name = str(id)
+    $ServerUI/PeerList.add_item(str(id))
     $Players.add_child(player)
 
 remotesync func remove_player(id):
@@ -138,30 +158,63 @@ remotesync func remove_player(id):
     $Players.get_node(str(id)).queue_free()
 
 func spawn_pressed(data):
-    var id = get_tree().get_network_unique_id()
-    rpc('spawn_ship', id, data)
+    var id = GameManager.network_id
+    if id:
+        rpc('spawn_ship', id, data)
+    else:
+        if $Ships.has_node(str(id)):
+            var player = $Players.get_node(str(id))
+            if player:
+                player.leave_ship()
+            $Ships.get_node(str(id)).kill()
+        spawn_ship(id, data)
 
+var next_spawn = 1
 remotesync func spawn_ship(id, data):
-    if $Ships.get_node(str(id)):
+    if $Ships.has_node(str(id)):
         return
+
+    var spawn_origin = $World.get_child(0).get_node('Spawnpoints')
+    var spawn = spawn_origin.get_node(str(next_spawn))
+    next_spawn = ((next_spawn + 1) % 4) + 1
 
     if data['name'] in ships:
         var ship = ships[data['name']].instance()
         ship.name = str(id)
+        ship.data = data
         $Ships.add_child(ship)
         ship.equip('weapons', 'nosegun', data['nosegun'])
+        ship.global_transform = spawn.global_transform
+        ship.look_at(spawn_origin.global_transform.origin, Vector3.UP)
         $Players.get_node(str(id)).enter_ship(ship)
     
-    $Players.get_node(str(get_tree().get_network_unique_id())).update_camera_mode()
+#    $Players.get_node(str(GameManager.network_id)).update_camera_mode()
     var display_name = ''
-    if id == get_tree().get_network_unique_id():
+    if id == GameManager.network_id:
         display_name += 'my '
     display_name += data['name']
     $ServerUI/ShipList.add_item(display_name)
 
-func _physics_process(delta):
+remote func ping(id, time):
     if is_network_master():
-        for ship in get_tree().get_nodes_in_group('ships'):
-            if ship.dead:
-                $Players.get_node(ship.name).leave_ship()
-                ship.rpc('kill')
+        rpc_id(id, 'ping', id, time)
+    else:
+        var now = OS.get_system_time_msecs()
+        MainMenu.Ping.text = '%4d ms' % int(now - time)
+
+var current_time = 0
+func _physics_process(delta):
+    if GameManager.connected:
+        if is_network_master():
+            for ship in get_tree().get_nodes_in_group('ships'):
+                if ship.dead:
+                    var player = $Players.get_node(ship.name)
+                    if player:
+                        player.leave_ship()
+                    ship.rpc('kill')
+        else:
+            current_time += delta
+            if current_time > 0.1:
+                current_time = 0.0
+                var time = OS.get_system_time_msecs()
+                rpc_id(1, 'ping', GameManager.network_id, time)
