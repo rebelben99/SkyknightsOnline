@@ -1,148 +1,86 @@
-extends RigidBody
+extends 'res://src/ships/BaseShip.gd'
 
-class Seat:
-    func set_camera(number):
-        print(number)
 
-var ship_dir = "res://src/ships/mosquito/"
-
-var slots = {
-    'weapons': {
-        'nosegun': {
-            'none': null,
-            'needler': "weapons/needler/Needler.tscn",
-            'rotary': "weapons/rotary/Rotary.tscn",
-            'banshee': "weapons/banshee/Banshee.tscn",
-        },
-        'pylons': {
-            'none': null,
-            'tanks': "weapons/tanks/Tanks.tscn",
-            'rocket_pods': "weapons/rocket_pods/RocketPods.tscn",
-        },
-    }
-}
-
-var inventory = {
-    'weapons': {
-        'nosegun': null,
-        'pylons': null,
-    }
-}
-
-var max_speed = 50
-var acceleration = 0.6
-var input_response = 8.0
-
-var hover_thrust = 10
-var up_thrust = 20
-var down_thrust = 15
-var vertical_decay = 0.98
-var up = 0
-
-var velocity = Vector3.ZERO
-var torque = Vector3.ZERO
-var throttle = 0
-var throttle_accel = 10
-var throttle_brake = 15
-var throttle_max = 100
-
-var forward_speed = 0
-
-var pitch = 0.0
-var yaw = 0.0
-var roll = 0.0
-var pitch_speed = 50
-var roll_speed = 25
-var yaw_speed = 20
-
-var pitch_input = 0.0
-var yaw_input = 0.0
-var roll_input = 0.0
-var input_state = {}
+export(String, 'none', 'needler', 'rotary', 'banshee') var nosegun = 'none'
 
 func _ready():
+    ship_dir = 'res://src/ships/mosquito/'
+    seating_diagram = ship_dir + 'mosquito_seating_diagram.png'
+    seating_diagram_outline = ship_dir + 'mosquito_seating_diagram_outline.png'
+
+    slots = {
+        'weapons': {
+            'nosegun': {
+                'none': null,
+                'needler': "weapons/needler/Needler.tscn",
+                'rotary': "weapons/rotary/Rotary.tscn",
+                'banshee': "weapons/banshee/Banshee.tscn",
+            },
+            'pylons': {
+                'none': null,
+                'tanks': "weapons/tanks/Tanks.tscn",
+                'rocket_pods': "weapons/rocket_pods/RocketPods.tscn",
+            },
+        }
+    }
+
+    inventory = {
+        'weapons': {
+            'nosegun': null,
+            'pylons': null,
+        }
+    }
+
+    max_health = 3000
+    current_health = max_health
+
+    mass = 10
     linear_damp = 1
     angular_damp = 3
+    
+    $Engine.max_speed = 150
+    $Engine.acceleration = 0.6
+    $Engine.hover_thrust = 45
+    $Engine.up_thrust = 500
+    $Engine.down_thrust = 300
+    $Engine.vertical_decay = 0.98
+    $Engine.throttle_accel = 15
+    $Engine.throttle_brake = 20
+    $Engine.throttle_max = 1000
+    $Engine.pitch_speed = 75
+    $Engine.roll_speed = 75
+    $Engine.yaw_speed = 15
 
     $Cockpit.hide()
 
     for action in InputManager.actions:
         input_state[action] = false
 
-func equip(category, item_type, item_name):
-    if !(category in slots):
-        return
-    if !(item_type in slots[category]):
-        return
-    if !(item_name in slots[category][item_type]):
-        return
+func set_camera(number=1):
+    if number:
+        $Seat1/FirstPersonCamera.set_current()
+        $Cockpit.show()
+        $Chassis.hide()
+    else:
+        $Seat1/ThirdPersonCamera.set_current()
+        $Cockpit.hide()
+        $Chassis.show()
 
-    if inventory[category][item_type]:
-        var prev_item = inventory[category][item_type]
-        if prev_item:
-            prev_item.queue_free()
+func set_freelook(pos):
+    $Seat1/FirstPersonCamera.yaw(-pos.x)
+    $Seat1/FirstPersonCamera.pitch(pos.y)
 
-    var item_dir = slots[category][item_type][item_name]
-    if !item_dir:
-        inventory[category][item_type] = null
-        return
-    
-    var item = load(ship_dir + item_dir).instance()
-    inventory[category][item_type] = item
-    if item_type == 'nosegun':
-        $Nosegun.add_child(item)
-    if item_type == 'pylons':
-        $Pylons.add_child(item)
+func reset_freelook():
+    $Seat1/FirstPersonCamera.reset()
 
-func handle_input(action, state):
-    pass
+func switch_weapon(number):
+    print(number)
 
-func check_inputs():
-    # if input['fire_primary']:
-    #     var b = Bullet.instance()
-    #     owner.add_child(b)
-    #     b.transform = $Nosegun/Muzzle.global_transform
-    #     b.velocity = -b.transform.basis.z * b.muzzle_velocity
-
-    if input_state['vertical_thrust_up']:
-        up += up_thrust
-    if input_state['vertical_thrust_down']:
-        up -= down_thrust
-    up *= vertical_decay
-
-    if input_state['throttle_up']:
-        throttle = min(throttle + throttle_accel, throttle_max)
-    if input_state['throttle_down']:
-        throttle = max(throttle - throttle_brake, 0)
-
-    pitch = clamp(pitch_input, -1, 1)
-    if input_state['pitch_up']:
-        pitch += -1
-    if input_state['pitch_down']:
-        pitch += 1
-    pitch = clamp(pitch, -1, 1)
-
-    yaw = clamp(yaw_input, -1, 1)
-    if input_state['yaw_left']:
-        yaw += 1
-    if input_state['yaw_right']:
-        yaw += -1
-    yaw = clamp(yaw, -1, 1)
-
-    roll = clamp(roll_input, -1, 1)
-    if input_state['roll_left']:
-        roll += -1
-    if input_state['roll_right']:
-        roll += 1
-    roll = clamp(roll, -1, 1)
-
-func _process(delta):
-    check_inputs()
+func give_ammo():
+    current_weapon.give_ammo()
 
 func _physics_process(delta):
-    torque = Vector3(pitch * pitch_speed, yaw * yaw_speed, roll * roll_speed) * delta
-    apply_torque_impulse(torque)
-
-    var vel = Vector3(0, up, throttle) * delta
-    velocity = Quat(global_transform.basis).xform(vel)
-    apply_central_impulse(velocity)
+    if current_weapon:
+        current_weapon.firing = input_state['fire_primary']
+        if input_state['reload']:
+            current_weapon.reload()
