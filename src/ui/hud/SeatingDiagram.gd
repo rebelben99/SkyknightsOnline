@@ -8,6 +8,15 @@ var bottom_texture setget set_bottom_texture
 func _ready():
     pass
 
+func load_ship(ship):
+    if ship.has_node('Health'):
+        set_max_health(ship.get_node('Health').maximum)
+    if ship.get('seating_diagram'):
+        set_top_texture(load(ship.seating_diagram))
+    if ship.get('seating_diagram_outline'):
+        set_bottom_texture(load(ship.seating_diagram_outline))
+    
+    show()
 
 func set_health(value):
     $Health.text = str(value)

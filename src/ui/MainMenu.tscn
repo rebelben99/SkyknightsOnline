@@ -48,18 +48,18 @@ margin_bottom = 86.0
 alignment = 2
 
 [node name="VSeparator3" type="VSeparator" parent="Bar/System"]
-margin_left = 367.0
-margin_right = 371.0
+margin_left = 330.0
+margin_right = 334.0
 margin_bottom = 86.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Local" type="Button" parent="Bar/System"]
-margin_left = 375.0
+margin_left = 338.0
 margin_right = 420.0
 margin_bottom = 86.0
-text = "Local"
+text = "VR Training"
 
 [node name="VSeparator5" type="VSeparator" parent="Bar/System"]
 margin_left = 424.0

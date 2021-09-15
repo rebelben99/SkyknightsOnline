@@ -3,6 +3,9 @@ extends 'res://src/ships/BaseShip.gd'
 
 export(String, 'none', 'tank_buster', 'vektor', 'spur') var nosegun = 'none'
 
+var wing_angle = 0
+var wing_turn_speed = 0.01
+
 func _ready():
     ship_dir = 'res://src/ships/liberator/'
     seating_diagram = ship_dir + 'liberator_seating_diagram.png'
@@ -36,16 +39,9 @@ func _ready():
         }
     }
 
-    seats = {
-        0: {'occupied': false},
-        1: {'occupied': false},
-        2: {'occupied': false},
-    }
+    $Health.maximum = 4500
 
-    max_health = 4500
-    current_health = max_health
-
-    mass = 20
+    mass = 15
     linear_damp = 1
     angular_damp = 3
 
@@ -55,9 +51,9 @@ func _ready():
     $Engine.up_thrust = 500
     $Engine.down_thrust = 300
     $Engine.vertical_decay = 0.98
-    $Engine.throttle_accel = 10
-    $Engine.throttle_brake = 15
-    $Engine.throttle_max = 200
+    $Engine.throttle_accel = 25
+    $Engine.throttle_brake = 35
+    $Engine.throttle_max = 1500
     $Engine.pitch_speed = 50
     $Engine.roll_speed = 50
     $Engine.yaw_speed = 20
@@ -65,29 +61,15 @@ func _ready():
     if nosegun != 'none':
         equip('weapons', 'nosegun', nosegun)
 
-func set_camera(number=1):
-    if number:
-        $Seat1/FirstPersonCamera.set_current()
-        $Cockpit.show()
-        $Chassis.hide()
-    else:
-        $Seat1/ThirdPersonCamera.set_current()
-        $Cockpit.hide()
-        $Chassis.show()
-
-func set_freelook(pos):
-    $Seat1/FirstPersonCamera.yaw(-pos.x)
-    $Seat1/FirstPersonCamera.pitch(pos.y)
-
-func enter_seat(seat_number):
-    if !seats[seat_number]['occupied']:
-        seats[seat_number]['occupied'] = true
-    print('switching to seat #', seat_number)
-
-func reset_freelook():
-    $Seat1/FirstPersonCamera.reset()
-
 func _physics_process(delta):
+    var target_wing_angle = -90
+    target_wing_angle += $Engine.throttle / 10
+    target_wing_angle = clamp(target_wing_angle, -90, 0)
+    
+    wing_angle = lerp(wing_angle, target_wing_angle, wing_turn_speed)
+    
+    $Model/Wings.rotation_degrees.x = wing_angle
+    
     if current_weapon:
         current_weapon.firing = input_state['fire_primary']
         if input_state['reload']:

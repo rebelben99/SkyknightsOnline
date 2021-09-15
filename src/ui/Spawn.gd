@@ -9,12 +9,12 @@ var ships = {
             'vortek',
         ],
     },
-    'mosquito': {
-        'noseguns': [
-            'needler',
-            'rotary',
-        ],
-    },
+    # 'mosquito': {
+    #     'noseguns': [
+    #         'needler',
+    #         'rotary',
+    #     ],
+    # },
     'liberator': {
         'noseguns': [
             'tank_buster',

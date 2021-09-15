@@ -3,9 +3,9 @@ extends Spatial
 
 var ships = {
     'reaver': preload("res://src/ships/reaver/Reaver.tscn"),
-    'mosquito': preload("res://src/ships/mosquito/Mosquito.tscn"),
+    # 'mosquito': preload("res://src/ships/mosquito/Mosquito.tscn"),
     'liberator': preload("res://src/ships/liberator/Liberator.tscn"),
-    'galaxy': preload("res://src/ships/galaxy/Galaxy.tscn"),
+    # 'galaxy': preload("res://src/ships/galaxy/Galaxy.tscn"),
 }
 
 var ship = null
@@ -23,8 +23,8 @@ func _ready():
     $UI/PrimarySelector.hide()
     $UI/SecondarySelector.hide()
 
-    for ship in ships:
-        $UI/ShipSelector.add_item(ship)
+    for s in ships:
+        $UI/ShipSelector.add_item(s)
     
     camera_location = $ShipCamera.transform
 
@@ -41,6 +41,7 @@ func _ship_selected(index):
 
     ship = ships[ship_name].instance()
     $Pedestal.add_child(ship)
+    ship.healthbar.hide()
 
     $UI/PrimarySelector.clear()
     $UI/PrimarySelector.hide()

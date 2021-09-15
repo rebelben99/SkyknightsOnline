@@ -3,3 +3,5 @@ export.cfg
 export_presets.cfg
 SkyknightsOnline.exe
 settings.json
+
+*.blend[0-9]

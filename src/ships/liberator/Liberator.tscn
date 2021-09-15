@@ -1,34 +1,45 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://src/ships/liberator/liberator_chassis.obj" type="ArrayMesh" id=1]
-[ext_resource path="res://src/ships/liberator/liberator_cockpit.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://src/ships/FirstPersonCamera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/ships/Health.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/ships/FirstPersonCamera.gd" type="Script" id=2]
+[ext_resource path="res://src/ships/Seats.gd" type="Script" id=3]
 [ext_resource path="res://src/ships/ThirdPersonCamera.gd" type="Script" id=4]
 [ext_resource path="res://src/ships/liberator/Liberator.gd" type="Script" id=5]
 [ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/ships/liberator/liberator.glb" type="PackedScene" id=8]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="CapsuleShape" id=9]
 radius = 2.23781
 height = 9.60352
 
-[sub_resource type="CapsuleShape" id=2]
+[sub_resource type="CapsuleShape" id=10]
 radius = 1.65359
 height = 9.13472
 
-[sub_resource type="CapsuleShape" id=3]
+[sub_resource type="CapsuleShape" id=11]
 height = 8.87482
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=12]
 extents = Vector3( 7.18806, 0.347779, 1.85745 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=13]
 extents = Vector3( 5.39689, 0.483761, 1 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=14]
 
-[sub_resource type="SpatialMaterial" id=7]
-albedo_color = Color( 0.592157, 0.592157, 0.592157, 1 )
+[sub_resource type="SpatialMaterial" id=16]
+flags_world_triplanar = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+flags_ensure_correct_normals = true
+albedo_color = Color( 0.505882, 0.505882, 0.505882, 1 )
+metallic = 1.0
+refraction_enabled = true
+refraction_scale = 0.05
+refraction_texture_channel = 0
+uv1_triplanar = true
+uv2_triplanar = true
 
 [node name="Liberator" type="RigidBody"]
 script = ExtResource( 5 )
@@ -37,36 +48,38 @@ script = ExtResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 0.994273, -0.106871, 0, 0.106871, 0.994273, 0, 3.3793, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 9 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.75292, -2.52637 )
-shape = SubResource( 2 )
+shape = SubResource( 10 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 0.986856, -0.161604, 0, 0.161604, 0.986856, 0, 6.86078, -12.0499 )
-shape = SubResource( 3 )
+shape = SubResource( 11 )
 
 [node name="CollisionShape4" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.97712, 0.943053 )
-shape = SubResource( 4 )
+shape = SubResource( 12 )
 
 [node name="CollisionShape5" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.2932, -14.7125 )
-shape = SubResource( 5 )
+shape = SubResource( 13 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.982922, -0.113266 )
-shape = SubResource( 6 )
+shape = SubResource( 14 )
 
-[node name="Chassis" type="MeshInstance" parent="."]
-mesh = ExtResource( 1 )
-material/0 = SubResource( 7 )
+[node name="Model" parent="." instance=ExtResource( 8 )]
 
-[node name="Cockpit" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.78977, 5.53808 )
-mesh = ExtResource( 2 )
-material/0 = SubResource( 7 )
+[node name="Chassis" parent="Model" index="0"]
+material/0 = SubResource( 16 )
+
+[node name="Wings" parent="Model" index="1"]
+material/0 = SubResource( 16 )
+
+[node name="UpperCockpit" parent="Model" index="2"]
+material/0 = SubResource( 16 )
 
 [node name="Nosegun" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25978, 6.3719 )
@@ -77,62 +90,102 @@ transform = Transform( 1, -8.74228e-08, 8.74228e-08, -8.74228e-08, -1, 0, 8.7422
 [node name="Tailgun" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.6759, -16.8159 )
 
-[node name="Seat1" type="Spatial" parent="."]
+[node name="Seats" type="Spatial" parent="."]
+script = ExtResource( 3 )
 
-[node name="FirstPersonCamera" parent="Seat1" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82575, 5.74638 )
-visible = true
+[node name="0" type="Spatial" parent="Seats"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.79917, 6.26744 )
 
-[node name="InnerGimbal2" type="Spatial" parent="Seat1/FirstPersonCamera"]
+[node name="FirstPersonCamera" type="Spatial" parent="Seats/0"]
+script = ExtResource( 2 )
 
-[node name="Camera" type="Camera" parent="Seat1/FirstPersonCamera/InnerGimbal2"]
+[node name="InnerGimbal" type="Spatial" parent="Seats/0/FirstPersonCamera"]
+
+[node name="CameraPos" type="Spatial" parent="Seats/0/FirstPersonCamera/InnerGimbal"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-fov = 74.0
-far = 10000.0
 
-[node name="ThirdPersonCamera" type="Spatial" parent="Seat1"]
+[node name="ThirdPersonCamera" type="Spatial" parent="Seats/0"]
 script = ExtResource( 4 )
 
-[node name="InnerGimbal" type="Spatial" parent="Seat1/ThirdPersonCamera"]
-transform = Transform( 1, 0, 0, 0, 0.984313, -0.176432, 0, 0.176432, 0.984313, 0, 11.2186, -14.6593 )
+[node name="CameraPos" type="Spatial" parent="Seats/0/ThirdPersonCamera"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.24397e-07, 8.17778, -21.8136 )
 
-[node name="Camera" type="Camera" parent="Seat1/ThirdPersonCamera/InnerGimbal"]
-transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0 )
-current = true
-fov = 74.0
-far = 10000.0
+[node name="1" type="Spatial" parent="Seats"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7157, -5.26124 )
 
-[node name="Seat2" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7157, -5.10465 )
-visible = false
+[node name="FirstPersonCamera" type="Spatial" parent="Seats/1"]
+script = ExtResource( 2 )
 
-[node name="FirstPersonCamera" parent="Seat2" instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-visible = true
+[node name="InnerGimbal" type="Spatial" parent="Seats/1/FirstPersonCamera"]
 
-[node name="InnerGimbal2" type="Spatial" parent="Seat2/FirstPersonCamera"]
+[node name="CameraPos" type="Spatial" parent="Seats/1/FirstPersonCamera/InnerGimbal"]
 
-[node name="Camera" type="Camera" parent="Seat2/FirstPersonCamera/InnerGimbal2"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-fov = 74.0
-far = 10000.0
+[node name="ThirdPersonCamera" type="Spatial" parent="Seats/1"]
+script = ExtResource( 4 )
 
-[node name="Seat3" type="Spatial" parent="."]
+[node name="CameraPos" type="Spatial" parent="Seats/1/ThirdPersonCamera"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.24397e-07, 8.17778, -21.8136 )
+
+[node name="2" type="Spatial" parent="Seats"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.61055, -16.9403 )
-visible = false
 
-[node name="FirstPersonCamera" parent="Seat3" instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-visible = true
+[node name="FirstPersonCamera" type="Spatial" parent="Seats/2"]
+script = ExtResource( 2 )
 
-[node name="InnerGimbal2" type="Spatial" parent="Seat3/FirstPersonCamera"]
+[node name="InnerGimbal" type="Spatial" parent="Seats/2/FirstPersonCamera"]
 
-[node name="Camera" type="Camera" parent="Seat3/FirstPersonCamera/InnerGimbal2"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-fov = 74.0
-far = 10000.0
+[node name="CameraPos" type="Spatial" parent="Seats/2/FirstPersonCamera/InnerGimbal"]
+
+[node name="ThirdPersonCamera" type="Spatial" parent="Seats/2"]
+script = ExtResource( 4 )
+
+[node name="CameraPos" type="Spatial" parent="Seats/2/ThirdPersonCamera"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.24397e-07, 8.17778, -21.8136 )
+
+[node name="Engine" parent="." instance=ExtResource( 7 )]
+
+[node name="Health" parent="." instance=ExtResource( 1 )]
 
 [node name="HealthBar" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.9559, 0 )
 
-[node name="Engine" parent="." instance=ExtResource( 7 )]
+[node name="EditorLights" type="Spatial" parent="."]
+
+[node name="Omni" type="Spatial" parent="EditorLights"]
+
+[node name="Top" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Bottom" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0 )
+editor_only = true
+omni_range = 3298.9
+
+[node name="Front" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Back" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 0, 0 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Left" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Right" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[editable path="Model"]

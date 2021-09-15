@@ -31,8 +31,7 @@ func _ready():
         }
     }
 
-    max_health = 3000
-    current_health = max_health
+    $Health.maximum = 3000
 
     mass = 10
     linear_damp = 1
@@ -55,23 +54,6 @@ func _ready():
 
     for action in InputManager.actions:
         input_state[action] = false
-
-func set_camera(number=1):
-    if number:
-        $Seat1/FirstPersonCamera.set_current()
-        $Cockpit.show()
-        $Chassis.hide()
-    else:
-        $Seat1/ThirdPersonCamera.set_current()
-        $Cockpit.hide()
-        $Chassis.show()
-
-func set_freelook(pos):
-    $Seat1/FirstPersonCamera.yaw(-pos.x)
-    $Seat1/FirstPersonCamera.pitch(pos.y)
-
-func reset_freelook():
-    $Seat1/FirstPersonCamera.reset()
 
 func switch_weapon(number):
     print(number)

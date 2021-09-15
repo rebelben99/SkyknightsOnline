@@ -6,6 +6,7 @@ onready var SeatingDiagram = $SeatingDiagram
 onready var WeaponInfo = $WeaponInfo
 onready var Crosshair = $Crosshair
 onready var ReloadIndicator = $ReloadIndicator
+onready var DebugOverlay = $DebugOverlay
 
 func _ready():
     SeatingDiagram.hide()

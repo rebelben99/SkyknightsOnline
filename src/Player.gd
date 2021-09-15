@@ -1,16 +1,21 @@
 extends Spatial
 
-var mouse_sens = Vector2(1, 1)
+var flight_sens = Vector2(1, 1)
+var freelook_sens = Vector2(1, 1)
 var ship = null
 var seat = null
 var first_person = true
 var freelook = false
 export var capture_mouse = false setget set_capture_mouse, get_capture_mouse
 var input_state = {}
+var camera_pos = null
 
 func _ready():
     InputManager.connect('input_event', self, '_handle_input_event')
-    Settings.MouseFlight.connect('value_changed', self, 'mouse_sens_changed')
+    Settings.MouseFlight.connect('value_changed', self, 'flight_sens_changed')
+    Settings.MouseFreelook.connect('value_changed', self, 'freelook_sens_changed')
+    flight_sens_changed(Settings.MouseFlight.value)
+    freelook_sens_changed(Settings.MouseFreelook.value)
     update_mouse_capture()
     update_camera_mode()
     HUD.Radial.connect('item_selected', self, 'radial_item_selected')
@@ -18,9 +23,12 @@ func _ready():
     for action in InputManager.actions:
         input_state[action] = false
 
-func mouse_sens_changed(sens):
+func flight_sens_changed(sens):
     if sens:
-        mouse_sens = Vector2(float(sens), float(sens))
+        flight_sens = Vector2(float(sens), float(sens))
+func freelook_sens_changed(sens):
+    if sens:
+        freelook_sens = Vector2(float(sens), float(sens))
 
 func radial_item_selected(id, pos):
     print(id, pos)
@@ -46,9 +54,14 @@ func toggle_mouse_capture(state=1):
 
         update_mouse_capture()
 
+func update_camera_pos():
+    if ship and camera_pos:
+        $Camera.current = true
+        $Camera.transform = camera_pos.global_transform
+
 func update_camera_mode():
     if ship:
-        ship.set_camera(first_person)
+        camera_pos = ship.seats.get_camera_pos(seat, int(!first_person))
         HUD.Crosshair.visible = first_person
     
 func toggle_camera_mode(state=1):
@@ -59,20 +72,27 @@ func toggle_camera_mode(state=1):
 func set_freelook(state=1):
     freelook = state
 
-    if !freelook:
-        ship.reset_freelook()
+    if ship and !freelook:
+        ship.seats.reset_freelook(seat)
+
+func switch_seat(new_seat):
+    if ship.seats.enter_seat(new_seat, self):
+        seat = new_seat
+        update_camera_mode()
 
 func enter_ship(new_ship):
+    if !new_ship.seats.has_empty_seats():
+        return
+
     if ship:
-        print('already in a ship?')
+        leave_ship()
     ship = new_ship
-    # ship.healthbar.hide()
-    update_camera_mode()
-    if ship.get('seating_diagram') and ship.get('seating_diagram_outline'):
-        HUD.SeatingDiagram.show()
-        HUD.SeatingDiagram.max_health = ship.max_health
-        HUD.SeatingDiagram.top_texture = load(ship.seating_diagram)
-        HUD.SeatingDiagram.bottom_texture = load(ship.seating_diagram_outline)
+
+    switch_seat(ship.seats.get_first_empty_seat())
+    
+    # update UI stuff
+    ship.healthbar.hide()
+    HUD.SeatingDiagram.load_ship(ship)
     if ship.current_weapon:
         HUD.WeaponInfo.show()
         if ship.current_weapon.get('crosshair'):
@@ -80,7 +100,7 @@ func enter_ship(new_ship):
             HUD.Crosshair.texture = load(ship.current_weapon.crosshair)
 
 func leave_ship():
-    # ship.healthbar.show()
+    ship.healthbar.show()
     ship = null
     
     HUD.SeatingDiagram.hide()
@@ -105,12 +125,13 @@ func get_object_under_mouse():
     var selection = space_state.intersect_ray(ray_from, ray_to, [], 0x7FFFFFFF, true, true)
     return selection
 
-#func _input(event):
-#    if !capture_mouse:
-#        if event is InputEventMouseButton:
-#            if event.button_index == BUTTON_RIGHT and event.pressed:
-#                print(get_object_under_mouse()['collider'].get_parent().name)
-#                HUD.Radial.open_menu(get_viewport().get_mouse_position())
+func _input(event):
+    if !capture_mouse and event is InputEventMouseButton:
+        if event.button_index == BUTTON_RIGHT and event.pressed:
+            
+            var selection = get_object_under_mouse()
+            if 'collider' in selection:
+                HUD.Radial.open_menu(get_viewport().get_mouse_position())
 
 func _handle_input_event(action, state):
     match action:
@@ -122,6 +143,15 @@ func _handle_input_event(action, state):
             set_freelook(state)
         'open_menu':
             print('menu')
+        'switch_seat_1':
+            if state:
+                switch_seat(0)
+        'switch_seat_2':
+            if state:
+                switch_seat(1)
+        'switch_seat_3':
+            if state:
+                switch_seat(2)
         'exit':
             get_tree().quit()
 
@@ -135,15 +165,15 @@ func _physics_process(delta):
     var mouse_delta = InputManager.get_mouse() * delta
 
     if capture_mouse:
-        pitch = mouse_delta.y * mouse_sens.y
-        roll = mouse_delta.x * mouse_sens.x
+        pitch = mouse_delta.y * flight_sens.y
+        roll = mouse_delta.x * flight_sens.x
     else:
         pitch = 0
         roll = 0
 
-    if ship:
-        if first_person and freelook:
-            ship.set_freelook(mouse_delta)
+    if ship and seat == 0:
+        if first_person and freelook and capture_mouse:
+            ship.seats.set_freelook(seat, mouse_delta * freelook_sens)
             pitch = 0
             roll = 0
 
@@ -154,7 +184,6 @@ func _physics_process(delta):
         input_state['pitch'] = pitch
         input_state['roll'] = roll
         input_state['yaw'] = 0
-
     
         if !GameManager.connected:
             apply_input(input_state)
@@ -184,6 +213,7 @@ remotesync func apply_input(input):
 
 func _process(delta):
     if ship:
+        update_camera_pos()
         if ship.current_weapon:
             var weapon = ship.current_weapon
 
@@ -197,7 +227,7 @@ func _process(delta):
             HUD.WeaponInfo.magazine = "%04d" % weapon.magazine
             HUD.WeaponInfo.ammo = "%04d" % weapon.ammo
 
-        HUD.SeatingDiagram.health = ship.current_health
+        HUD.SeatingDiagram.health = ship.get_node('Health').current
 
         HUD.Debug.Throttle.text = 'throttle: ' + str(ship.get_node('Engine').throttle)
         HUD.Debug.Velocity.text = 'speed: ' + str(ship.linear_velocity.length())

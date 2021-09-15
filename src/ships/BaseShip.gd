@@ -7,14 +7,8 @@ var ship_dir = ''
 var seating_diagram = ''
 var seating_diagram_outline = ''
 
-var max_health = 100
-sync var current_health = max_health
-
 var slots = {}
 var inventory = {}
-var seats = {
-    0: {'occupied': false},
-}
 
 sync var server_transform = Transform()
 sync var server_linear_velocity = Vector3()
@@ -27,10 +21,10 @@ var current_weapon = null
 sync var dead = false
 
 onready var healthbar = $HealthBar
+onready var seats = $Seats
 
 func _ready():
     add_to_group('ships')
-    $Cockpit.hide()
 
     for action in InputManager.actions:
         input_state[action] = false
@@ -75,17 +69,6 @@ func set_input(input):
     for action in input:
         input_state[action] = input[action]
 
-func do_damage(amount):
-    current_health -= amount
-    if GameManager.connected:
-        if is_network_master():
-            if current_health <= 0:
-                rset('dead', true)
-    else:
-        if current_health <= 0:
-            queue_free()
-
-
 remotesync func kill():
     queue_free()
 
@@ -93,7 +76,7 @@ func _physics_process(delta):
     if GameManager.connected:
         if is_network_master():
             rset_unreliable('server_transform', transform)
-            rset_unreliable('current_health', current_health)
+#            rset_unreliable('current_health', current_health)
         else:
             if interpolation_active:		
                 var scale_factor = 0.1

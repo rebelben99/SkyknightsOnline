@@ -13,8 +13,7 @@ func _ready():
     inventory = {
     }
     
-    max_health = 8000
-    current_health = max_health
+    $Health.maximum = 8000
 
     mass = 40
     linear_damp = 1

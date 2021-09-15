@@ -1,22 +1,25 @@
 extends Spatial
 
-func _ready():
-    pass
+var pos setget , get_pos
 
-func _process(_delta):
-    pass
+var yaw_limit = Vector2(-PI/2, PI/2)
+var pitch_limit = Vector2(-PI/2, PI/5)
 
-func set_current():
-    $InnerGimbal/Camera.current = true
+func get_pos():
+    return $InnerGimbal/CameraPos
 
 func reset():
     transform.basis = Basis()
     $InnerGimbal.transform.basis = Basis()
 
+func freelook(pos):
+    yaw(-pos.x)
+    pitch(pos.y)
+
 func yaw(value):
     rotate_object_local(Vector3.UP, value)
-    rotation.y = clamp(rotation.y, -PI/2, PI/2)
+    rotation.y = clamp(rotation.y, yaw_limit.x, yaw_limit.y)
 
 func pitch(value):
     $InnerGimbal.rotate_object_local(Vector3.RIGHT, value)
-    $InnerGimbal.rotation.x = clamp($InnerGimbal.rotation.x, -PI/2, PI/5)
+    $InnerGimbal.rotation.x = clamp($InnerGimbal.rotation.x, pitch_limit.x, pitch_limit.y)

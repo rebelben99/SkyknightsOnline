@@ -115,6 +115,6 @@ __meta__ = {
 environment = ExtResource( 1 )
 
 [node name="OmniLight2" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -84.0856, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 76.5671, 0 )
 light_energy = 2.95
 omni_range = 3298.9

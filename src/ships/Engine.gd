@@ -2,6 +2,8 @@ extends Spatial
 
 # these control the ship's handling
 export var max_speed = 150
+export var speed = 0
+export var target_speed = 0
 export var acceleration = 0.6
 
 export var hover_thrust = 100

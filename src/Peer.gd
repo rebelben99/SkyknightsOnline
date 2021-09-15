@@ -1,15 +1,15 @@
 extends Spatial
 
 var ship = null
+var seat = null
 
 func _ready():
     pass
 
 func enter_ship(new_ship):
     ship = new_ship
-    ship.healthbar.show()
     if ship:
-        ship.set_camera(0)
+        ship.healthbar.show()
 
 func update_camera_mode():
     pass

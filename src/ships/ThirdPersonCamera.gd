@@ -1,11 +1,6 @@
 extends Spatial
 
-func _ready():
-    pass
+var pos setget , get_pos
 
-
-func set_current():
-    $InnerGimbal/Camera.current = true
-
-func _process(delta):
-    pass
+func get_pos():
+    return $CameraPos

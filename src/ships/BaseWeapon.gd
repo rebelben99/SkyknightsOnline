@@ -33,8 +33,8 @@ func reload():
         reloading = true
 
 func on_impact(target):    
-    if target.get('current_health'):
-        target.do_damage(damage)
+    if target.has_node('Health'):
+        target.get_node('Health').do_damage(damage)
 
 func give_ammo():
     ammo = min(ammo + magazine_capacity, ammo_capacity)

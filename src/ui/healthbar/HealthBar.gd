@@ -9,17 +9,18 @@ var auto = false
 
 func _ready():
     hide()
-    if get_parent() and get_parent().get("max_health"):
-        healthbar.max_value = get_parent().max_health
-        # show()
+    if get_parent() and get_parent().has_node('Health'):
+        var health = get_parent().get_node('Health')
+        healthbar.max_value = health.maximum
+        show()
         auto = true
 
     texture = $Viewport.get_texture()
 
 func _process(delta):
     if auto:
-        var hp = get_parent().get("current_health")
-        update(hp)
+        var health = get_parent().get_node('Health')
+        update(health.current)
 
 func update(value):
     healthbar.texture_progress = bar_green

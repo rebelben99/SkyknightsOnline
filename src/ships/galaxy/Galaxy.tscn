@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/ships/galaxy/Galaxy.gd" type="Script" id=1]
 [ext_resource path="res://src/ships/galaxy/galaxy_cockpit.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://src/ships/galaxy/galaxy_chassis.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ships/Health.tscn" type="PackedScene" id=6]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 2, 2, 2 )
@@ -72,5 +73,47 @@ material/0 = SubResource( 8 )
 
 [node name="Engine" parent="." instance=ExtResource( 4 )]
 
+[node name="Health" parent="." instance=ExtResource( 6 )]
+
 [node name="HealthBar" parent="." instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.2004, 0 )
+
+[node name="EditorLights" type="Spatial" parent="."]
+visible = false
+
+[node name="Omni" type="Spatial" parent="EditorLights"]
+
+[node name="Top" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Bottom" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -100, 0 )
+editor_only = true
+omni_range = 3298.9
+
+[node name="Front" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 100, 0, 0 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Back" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 0, 0 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Left" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9
+
+[node name="Right" type="OmniLight" parent="EditorLights/Omni"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100 )
+light_energy = 2.95
+editor_only = true
+omni_range = 3298.9

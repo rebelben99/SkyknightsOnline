@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/ui/hud/Debug.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/hud/reload_under.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/ui/hud/HUD.gd" type="Script" id=6]
 [ext_resource path="res://src/ui/hud/WeaponInfo.gd" type="Script" id=7]
 [ext_resource path="res://src/ui/hud/SeatingDiagram.gd" type="Script" id=8]
+[ext_resource path="res://src/ui/debug_overlay/DebugOverlay.tscn" type="PackedScene" id=9]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 6 )
@@ -180,3 +181,5 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="DebugOverlay" parent="." instance=ExtResource( 9 )]

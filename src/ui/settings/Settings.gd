@@ -6,7 +6,7 @@ var settings = {}
 var settings_on_disk = {}
 
 onready var MouseFlight = $Controls/Mouse/Flight
-onready var MouseFreeLook = $Controls/Mouse/FreeLook
+onready var MouseFreelook = $Controls/Mouse/FreeLook
 onready var MouseTurret = $Controls/Mouse/Turret
 
 var need_to_save = false
