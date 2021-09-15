@@ -7,7 +7,7 @@
 [ext_resource path="res://src/ships/FirstPersonCamera.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ships/reaver/cosmetics/fins.obj" type="ArrayMesh" id=6]
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/ships/reaver/reaver.fbx" type="PackedScene" id=8]
+[ext_resource path="res://src/ships/reaver/reaver.glb" type="PackedScene" id=8]
 [ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=9]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -77,6 +77,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05671, 0 )
 visible = false
 shape = SubResource( 7 )
 
+[node name="Model" parent="." instance=ExtResource( 8 )]
+
+[node name="Chassis" parent="Model" index="0"]
+material/0 = SubResource( 8 )
+
+[node name="Wings" parent="Model" index="1"]
+material/0 = SubResource( 8 )
+
+[node name="Cockpit" parent="Model" index="2"]
+material/0 = SubResource( 8 )
+
 [node name="Chassis" type="MeshInstance" parent="."]
 visible = false
 mesh = ExtResource( 2 )
@@ -122,9 +133,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.04876, 1.96847 )
 
 [node name="FinHardpoint" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.71881, 1.30885 )
-visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="FinHardpoint"]
+visible = false
 mesh = ExtResource( 6 )
 material/0 = SubResource( 8 )
 
@@ -158,15 +169,4 @@ light_energy = 2.95
 editor_only = true
 omni_range = 3298.9
 
-[node name="reaver" parent="." instance=ExtResource( 8 )]
-
-[node name="Light" parent="reaver/RootNode" index="0"]
-visible = false
-
-[node name="Camera" parent="reaver/RootNode" index="1"]
-visible = false
-
-[node name="reaver_chassis001" parent="reaver/RootNode" index="2"]
-visible = false
-
-[editable path="reaver"]
+[editable path="Model"]

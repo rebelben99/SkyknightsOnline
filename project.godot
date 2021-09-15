@@ -50,7 +50,7 @@ multirun/window_distance=200
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/CommandPalettePopup/plugin.cfg", "res://addons/RadialMenu/plugin.cfg", "res://addons/multirun/plugin.cfg", "res://addons/ui_design_tool/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/CommandPalettePopup/plugin.cfg", "res://addons/multirun/plugin.cfg", "res://addons/ui_design_tool/plugin.cfg" )
 
 [input]
 
