@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/kenney_prototype_textures/light/texture_08.png" type="Texture" id=1]
 [ext_resource path="res://assets/box_shader.tres" type="Material" id=2]
 [ext_resource path="res://src/scenes/TestWorld.gd" type="Script" id=3]
+[ext_resource path="res://src/ships/mosquito/Mosquito.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/ships/liberator/Liberator.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/ships/galaxy/Galaxy.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_world_triplanar = true
@@ -73,6 +76,24 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 291.39, 0 )
 radius = 100.0
 height = 5.0
 material = ExtResource( 2 )
+
+[node name="Galaxy" parent="Props" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 210.042, 52.1643, 0 )
+
+[node name="Galaxy2" parent="Props" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 52.1643, 76.1274 )
+
+[node name="Liberator" parent="Props" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 52.1643, -263.183 )
+
+[node name="Liberator2" parent="Props" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -90.4891, 52.1643, 0 )
+
+[node name="Mosquito" parent="Props" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 76.0656, 59.8401, 77.5409 )
+
+[node name="Mosquito2" parent="Props" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -83.8318, 59.8401, -152.41 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.288096, 0.957602, 0, -0.957602, -0.288096, 0, 1500, 0 )

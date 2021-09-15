@@ -77,9 +77,14 @@ func set_input(input):
 
 func do_damage(amount):
     current_health -= amount
-    if is_network_master():
+    if GameManager.connected:
+        if is_network_master():
+            if current_health <= 0:
+                rset('dead', true)
+    else:
         if current_health <= 0:
-            rset('dead', true)
+            queue_free()
+
 
 remotesync func kill():
     queue_free()

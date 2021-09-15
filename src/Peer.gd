@@ -18,6 +18,7 @@ func leave_ship():
     ship = null
 
 remote func network_update(input):
+    # stop hacking here
     rpc_unreliable('apply_input', input)
 
 remotesync func apply_input(input):

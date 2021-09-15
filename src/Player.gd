@@ -156,9 +156,9 @@ func _physics_process(delta):
         input_state['yaw'] = 0
 
     
-        # if !GameManager.connected:
-        #     apply_input(input_state)
-        #     return
+        if !GameManager.connected:
+            apply_input(input_state)
+            return
 
         var state_diff = {}
 

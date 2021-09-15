@@ -76,6 +76,8 @@ func give_ammo():
     current_weapon.give_ammo()
 
 func _physics_process(delta):
+    $reaver/RootNode/Wings.rotate_object_local(Vector3.RIGHT, 0.01)
+    
     if current_weapon:
         current_weapon.firing = input_state['fire_primary']
         if input_state['reload']:
