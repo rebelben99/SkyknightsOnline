@@ -46,11 +46,11 @@ uv2_triplanar = true
 
 [node name="Reaver" type="RigidBody"]
 physics_material_override = SubResource( 1 )
+continuous_cd = true
 can_sleep = false
 script = ExtResource( 4 )
 
 [node name="Hitbox" type="Area" parent="."]
-visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70373, 1.62545 )
@@ -115,9 +115,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.04876, 1.96847 )
 
 [node name="FinHardpoint" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.71881, 1.30885 )
+visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="FinHardpoint"]
-visible = false
 mesh = ExtResource( 6 )
 material/0 = SubResource( 8 )
 
@@ -129,7 +129,6 @@ material/0 = SubResource( 8 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.49939, 0 )
 
 [node name="EditorLights" type="Spatial" parent="."]
-visible = false
 
 [node name="Omni" type="Spatial" parent="EditorLights"]
 
