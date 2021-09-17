@@ -14,12 +14,13 @@ var pedestal_rotation = -50
 var secondary_type = null
 
 func _ready():
-    InputManager.connect('input_event', self, '_handle_input_event')
+    # InputManager.connect('input_event', self, '_handle_input_event')
 
     $UI/ShipSelector.connect('item_activated', self, '_ship_selected')
     $UI/PrimarySelector.connect('item_activated', self, '_primary_selected')
     $UI/SecondarySelector.connect('item_activated', self, 'secondary_selected')
     
+    # $UI/ShipSelector.hide()
     $UI/PrimarySelector.hide()
     $UI/SecondarySelector.hide()
 
@@ -28,10 +29,10 @@ func _ready():
     
     camera_location = $ShipCamera.transform
 
-func _handle_input_event(action, state):
-    match action:
-        'exit':
-            get_tree().quit()
+# func _handle_input_event(action, state):
+#     match action:
+#         'exit':
+#             get_tree().quit()
 
 func _ship_selected(index):
     var ship_name = $UI/ShipSelector.get_item_text(index)

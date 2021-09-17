@@ -1,7 +1,9 @@
 .import
 export.cfg
 export_presets.cfg
-SkyknightsOnline.exe
 settings.json
 
 *.blend[0-9]
+
+SkyknightsOnline.exe
+SkyknightsOnline.x86_64

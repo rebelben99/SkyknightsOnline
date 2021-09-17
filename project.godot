@@ -32,22 +32,27 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GameManager="*res://src/GameManager.gd"
 Settings="*res://src/ui/settings/Settings.tscn"
+Network="*res://src/network/network.gd"
+Game="*res://src/GameManager.gd"
 InputManager="*res://src/InputManager.gd"
 MainMenu="*res://src/ui/MainMenu.tscn"
 HUD="*res://src/ui/hud/HUD.tscn"
-Chat="*res://src/ChatManager.gd"
 
 [debug]
 
 gdscript/warnings/unassigned_variable=false
 gdscript/warnings/unused_variable=false
-multirun/number_of_windows=3
-multirun/add_custom_args=true
-multirun/first_window_args="--server=1"
-multirun/other_window_args="--connect=1"
-multirun/window_distance=200
+multirun/server/number_of_windows=3
+multirun/server/window_distance=400
+multirun/server/add_custom_args=true
+multirun/client/number_of_windows=2
+multirun/client/window_distance=400
+multirun/client/add_custom_args=true
+multirun/server/first_window_args="--server=1"
+multirun/server/other_window_args="--connect=1"
+multirun/client/first_window_args="--connect=1"
+multirun/client/other_window_args="--server=1"
 
 [editor_plugins]
 

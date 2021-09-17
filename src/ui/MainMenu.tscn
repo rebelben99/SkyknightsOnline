@@ -48,61 +48,39 @@ margin_bottom = 86.0
 alignment = 2
 
 [node name="VSeparator3" type="VSeparator" parent="Bar/System"]
-margin_left = 330.0
-margin_right = 334.0
+margin_left = 400.0
+margin_right = 404.0
 margin_bottom = 86.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Local" type="Button" parent="Bar/System"]
-margin_left = 338.0
-margin_right = 420.0
+margin_left = 408.0
+margin_right = 490.0
 margin_bottom = 86.0
 text = "VR Training"
 
 [node name="VSeparator5" type="VSeparator" parent="Bar/System"]
-margin_left = 424.0
-margin_right = 428.0
+margin_left = 494.0
+margin_right = 498.0
 margin_bottom = 86.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Connect" type="Button" parent="Bar/System"]
-margin_left = 432.0
-margin_right = 496.0
+margin_left = 502.0
+margin_right = 566.0
 margin_bottom = 86.0
 text = "Connect"
 
 [node name="Spacer" type="Label" parent="Bar/System"]
-margin_left = 500.0
+margin_left = 570.0
 margin_top = 36.0
-margin_right = 500.0
+margin_right = 570.0
 margin_bottom = 50.0
 align = 1
-
-[node name="UserName" type="VBoxContainer" parent="Bar/System"]
-margin_left = 504.0
-margin_right = 570.0
-margin_bottom = 86.0
-alignment = 1
-
-[node name="Label" type="Label" parent="Bar/System/UserName"]
-margin_top = 22.0
-margin_right = 66.0
-margin_bottom = 36.0
-text = "Username"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LineEdit" type="LineEdit" parent="Bar/System/UserName"]
-margin_top = 40.0
-margin_right = 66.0
-margin_bottom = 64.0
-text = "user"
 
 [node name="Spacer2" type="Label" parent="Bar/System"]
 margin_left = 574.0
@@ -111,30 +89,40 @@ margin_right = 574.0
 margin_bottom = 50.0
 align = 1
 
-[node name="VBox" type="VBoxContainer" parent="Bar/System"]
+[node name="NetStatus" type="VBoxContainer" parent="Bar/System"]
 margin_left = 578.0
 margin_right = 670.0
 margin_bottom = 86.0
 alignment = 1
 
-[node name="Status" type="Label" parent="Bar/System/VBox"]
-margin_top = 18.0
+[node name="Username" type="Label" parent="Bar/System/NetStatus"]
+margin_top = 9.0
 margin_right = 92.0
-margin_bottom = 32.0
+margin_bottom = 23.0
+text = "no username"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Status" type="Label" parent="Bar/System/NetStatus"]
+margin_top = 27.0
+margin_right = 92.0
+margin_bottom = 41.0
 text = "not connected"
 align = 1
 
-[node name="ID" type="Label" parent="Bar/System/VBox"]
-margin_top = 36.0
+[node name="ID" type="Label" parent="Bar/System/NetStatus"]
+margin_top = 45.0
 margin_right = 92.0
-margin_bottom = 50.0
+margin_bottom = 59.0
 text = "no client ID"
 align = 1
 
-[node name="Ping" type="Label" parent="Bar/System/VBox"]
-margin_top = 54.0
+[node name="Ping" type="Label" parent="Bar/System/NetStatus"]
+margin_top = 63.0
 margin_right = 92.0
-margin_bottom = 68.0
+margin_bottom = 77.0
 text = "0 ms"
 align = 1
 

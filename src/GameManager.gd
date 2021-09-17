@@ -1,53 +1,102 @@
 extends Node
 
-var player_state_collection = {}
+onready var scenes = {
+    'player': preload("res://src/Player.tscn"),
+    'peer': preload("res://src/Peer.tscn"),
+    'test_world': preload("res://src/scenes/TestWorld.tscn"),
+    'hangar': preload("res://src/scenes/Hangar.tscn"),
+}
 
-var connected = false 
-var network_id = 0 setget , get_network_id
+onready var ships = {
+    'reaver': preload("res://src/ships/reaver/Reaver.tscn"),
+    'mosquito': preload("res://src/ships/mosquito/Mosquito.tscn"),
+    'liberator': preload("res://src/ships/liberator/Liberator.tscn"),
+}
+
+
+onready var World = get_node('/root/Main/World')
+onready var Ships = get_node('/root/Main/Ships')
+onready var Players = get_node('/root/Main/Players')
 
 func _ready():
     pass
 
-func get_network_id():
-    if connected:
-        return get_tree().get_network_unique_id()
+func on_local_pressed():
+    Game.load_world('test_world')
+    create_player(0)
+    MainMenu.Spawn.show()
+
+remote func load_world(name):
+    if World.get_child_count():
+        World.get_child(0).queue_free()
+
+    var world = scenes[name].instance()
+    World.add_child(world)
+
+    if world.get_node('Camera'):
+        world.get_node('Camera').current = true
+
+remotesync func create_player(id):
+    var player         
+
+    if id == Network.net_id:
+        player = scenes['player'].instance()
+        player.set_network_master(Network.net_id)
     else:
-        return 0
+        player = scenes['peer'].instance()
 
-remote func recieve_player_state(player_state):
-    var player_id = get_tree().get_rpc_sender_id()
-    if player_state_collection.has(player_id):
-        if player_state_collection[player_id]['time'] < player_state['time']:
-            pass
-        else:
-            print('not newer')
+    player.name = str(id)
+    Players.add_child(player)
 
-var previous_state = {}
-func send_player_state(player_state):
-    var state_diff = {'time': OS.get_system_time_msecs()}
+remotesync func remove_player(id):
+    if Ships.get_node(str(id)):
+        Ships.get_node(str(id)).queue_free()
+    
+    Players.get_node(str(id)).queue_free()
 
-    for action in player_state:
-        if action in previous_state:
-            pass
-        else:
-            previous_state[action] = null
+func spawn_pressed(data):
+    var id = Network.net_id
 
-        if previous_state[action] != player_state[action]:
-            state_diff[action] = player_state[action]
-            previous_state[action] = player_state[action]
+    if Network.connected:
+        rpc('spawn_ship', id, data)
+    else:
+        if Ships.has_node(str(id)):
+            var player = Players.get_node(str(id))
+            if player:
+                player.leave_ship()
+            Ships.get_node(str(id)).kill()
+        spawn_ship(id, data)
 
-    # if current_time > 0.5:
-    #     current_time = 0.0
-        
-    #     rpc_unreliable_id(1, 'network_update', input_state)
-    # else:
-    #     rpc_unreliable_id(1, 'network_update', state_diff)
+var next_spawn = 1
+remotesync func spawn_ship(id, data):
+    if Ships.has_node(str(id)):
+        return
 
-    rpc_unreliable_id(1, 'recieve_player_state', state_diff)
+    var spawn_origin = World.get_child(0).get_node('Spawnpoints')
+    var spawn = spawn_origin.get_node(str(next_spawn))
+    next_spawn = ((next_spawn + 1) % 4) + 1
 
-remote func recieve_world_state(world_state):
-    pass
-
+    if data['name'] in ships:
+        var ship = ships[data['name']].instance()
+        ship.name = str(id)
+        ship.data = data
+        Ships.add_child(ship)
+        ship.equip('weapons', 'nosegun', data['nosegun'])
+        ship.global_transform = spawn.global_transform
+        ship.look_at(spawn_origin.global_transform.origin, Vector3.UP)
+        Players.get_node(str(id)).enter_ship(ship)
+    
+    var display_name = ''
+    if id == Network.net_id:
+        display_name += 'my '
+    display_name += data['name']
 
 func _physics_process(delta):
-    pass
+    if Network.connected:
+        if is_network_master():
+            for ship in get_tree().get_nodes_in_group('ships'):
+                if ship.dead:
+                    var player = Players.get_node(ship.name)
+                    if player:
+                        player.leave_ship()
+                    ship.rpc('kill')

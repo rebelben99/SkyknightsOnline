@@ -73,10 +73,9 @@ remotesync func kill():
     queue_free()
 
 func _physics_process(delta):
-    if GameManager.connected:
+    if Network.connected:
         if is_network_master():
             rset_unreliable('server_transform', transform)
-#            rset_unreliable('current_health', current_health)
         else:
             if interpolation_active:		
                 var scale_factor = 0.1

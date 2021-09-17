@@ -5,10 +5,6 @@ var settings_file = 'settings.json'
 var settings = {}
 var settings_on_disk = {}
 
-onready var MouseFlight = $Controls/Mouse/Flight
-onready var MouseFreelook = $Controls/Mouse/FreeLook
-onready var MouseTurret = $Controls/Mouse/Turret
-
 var need_to_save = false
 
 func _ready():
@@ -16,12 +12,19 @@ func _ready():
     hide()
 
 func toggle_visibility():
+    save_settings()
     if visible:
-        if need_to_save:
-            save_settings()
         hide()
     else:
         show()
+
+func _input(event):
+    if not visible:
+        return
+
+    if event is InputEventKey:
+        if event.pressed and event.scancode == KEY_ESCAPE:
+            toggle_visibility()
 
 func register(setting):
     var path = setting.get_path()
@@ -37,15 +40,21 @@ func read(path):
     else:
         return null
 
+func connect_to(path, object, method):
+    if path in settings:
+        read(path).connect('value_changed', object, method)
+        object.call(method, read(path).value)
+
 func save_settings():
-    var f = File.new()
-    f.open(settings_file, File.WRITE)
     var data = {}
     for setting in settings:
+        settings[setting].emit()
         var value = settings[setting].value
-        if setting in settings_on_disk or value != settings[setting].starting_value:
+        if setting in settings_on_disk or value != settings[setting].default_value:
             data[setting] = value
     var json = JSON.print(data, "\t")
+    var f = File.new()
+    f.open(settings_file, File.WRITE)
     f.store_string(json)
     f.close()
 
@@ -54,9 +63,10 @@ func load_settings():
     if f.file_exists(settings_file):
         f.open(settings_file, File.READ)
         var text = f.get_as_text()
+        f.close()
         var result = JSON.parse(text).result
         if result is Dictionary:
             for setting in result:
-                settings[setting].value = result[setting]
+                if setting in settings:
+                    settings[setting].value = result[setting]
                 settings_on_disk[setting] = result[setting]
-        f.close()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/ui/settings/Settings.gd" type="Script" id=1]
 [ext_resource path="res://src/ui/settings/SettingSlider.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/settings/Tree.gd" type="Script" id=3]
+[ext_resource path="res://src/ui/settings/SettingTextbox.tscn" type="PackedScene" id=4]
 
 [node name="Settings" type="TabContainer"]
 anchor_left = 0.5
@@ -22,7 +23,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="General" type="Control" parent="."]
+[node name="General" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -31,20 +32,45 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Label" type="Label" parent="General"]
-margin_right = 40.0
+margin_right = 592.0
 margin_bottom = 14.0
-text = "Coming soon"
+text = "Network Settings"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HSeparator" type="HSeparator" parent="General"]
 margin_top = 18.0
-margin_right = 574.0
+margin_right = 592.0
 margin_bottom = 22.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Username" parent="General" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 26.0
+margin_right = 592.0
+margin_bottom = 50.0
+description = "display name for online play"
+
+[node name="ServerAddress" parent="General" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 54.0
+margin_right = 592.0
+margin_bottom = 78.0
+description = "the server to connect to"
+default_value = "skyknights.daelon.net"
+
+[node name="ServerPort" parent="General" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 82.0
+margin_right = 592.0
+margin_bottom = 106.0
+default_value = "9099"
 
 [node name="Controls" type="TabContainer" parent="."]
 visible = false
@@ -56,35 +82,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 tab_align = 0
 
-[node name="Keyboard" type="VBoxContainer" parent="Controls"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="Description" type="Label" parent="Controls/Keyboard"]
-margin_right = 572.0
-margin_bottom = 14.0
-text = "Keybindings"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HSeparator" type="HSeparator" parent="Controls/Keyboard"]
-margin_top = 18.0
-margin_right = 572.0
-margin_bottom = 22.0
-
-[node name="Tree" type="Tree" parent="Controls/Keyboard"]
-margin_top = 26.0
-margin_right = 572.0
-margin_bottom = 27.0
-script = ExtResource( 3 )
-
 [node name="Mouse" type="VBoxContainer" parent="Controls"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -96,13 +94,13 @@ __meta__ = {
 }
 
 [node name="Description" type="Label" parent="Controls/Mouse"]
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 14.0
 text = "Various mouse related settings"
 
 [node name="HSeparator" type="HSeparator" parent="Controls/Mouse"]
 margin_top = 18.0
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 22.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -110,7 +108,7 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="Controls/Mouse"]
 margin_top = 26.0
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 40.0
 text = "Mouse Sensitivity"
 
@@ -118,15 +116,15 @@ text = "Mouse Sensitivity"
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 44.0
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 68.0
 hint_tooltip = "Mouse sensitivity for flying an aircraft"
 
-[node name="FreeLook" parent="Controls/Mouse" instance=ExtResource( 2 )]
+[node name="Freelook" parent="Controls/Mouse" instance=ExtResource( 2 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 72.0
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 96.0
 hint_tooltip = "Mouse sensitivity for using the freelook camera"
 
@@ -134,14 +132,42 @@ hint_tooltip = "Mouse sensitivity for using the freelook camera"
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 100.0
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 124.0
 hint_tooltip = "Mouse sensitivity for operating a gun turret"
 
 [node name="HSeparator2" type="HSeparator" parent="Controls/Mouse"]
 margin_top = 128.0
-margin_right = 572.0
+margin_right = 584.0
 margin_bottom = 132.0
+
+[node name="Keyboard" type="VBoxContainer" parent="Controls"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="Description" type="Label" parent="Controls/Keyboard"]
+margin_right = 584.0
+margin_bottom = 14.0
+text = "Keybindings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="Controls/Keyboard"]
+margin_top = 18.0
+margin_right = 584.0
+margin_bottom = 22.0
+
+[node name="Tree" type="Tree" parent="Controls/Keyboard"]
+margin_top = 26.0
+margin_right = 584.0
+margin_bottom = 27.0
+script = ExtResource( 3 )
 
 [node name="Controller" type="Control" parent="Controls"]
 visible = false
@@ -166,10 +192,10 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 40.0
-margin_right = -10.0
-margin_bottom = -10.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 
 [node name="Description" type="Label" parent="Audio"]
 margin_right = 592.0
@@ -198,6 +224,7 @@ margin_right = 592.0
 margin_bottom = 98.0
 
 [node name="Video" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -206,19 +233,6 @@ margin_right = -4.0
 margin_bottom = -4.0
 
 [node name="Label" type="Label" parent="Video"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Coming soon"
-
-[node name="Network" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="Label" type="Label" parent="Network"]
 margin_right = 40.0
 margin_bottom = 14.0
 text = "Coming soon"

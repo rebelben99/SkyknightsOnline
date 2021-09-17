@@ -12,10 +12,10 @@ var camera_pos = null
 
 func _ready():
     InputManager.connect('input_event', self, '_handle_input_event')
-    Settings.MouseFlight.connect('value_changed', self, 'flight_sens_changed')
-    Settings.MouseFreelook.connect('value_changed', self, 'freelook_sens_changed')
-    flight_sens_changed(Settings.MouseFlight.value)
-    freelook_sens_changed(Settings.MouseFreelook.value)
+
+    Settings.connect_to('Controls/Mouse/Flight', self, 'flight_sens_changed')
+    Settings.connect_to('Controls/Mouse/Freelook', self, 'freelook_sens_changed')
+
     update_mouse_capture()
     update_camera_mode()
     HUD.Radial.connect('item_selected', self, 'radial_item_selected')
@@ -36,6 +36,7 @@ func radial_item_selected(id, pos):
 func update_mouse_capture():
     if capture_mouse:
         Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+        HUD.Chat.InputField.release_focus()
     else:
         Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -143,6 +144,11 @@ func _handle_input_event(action, state):
             set_freelook(state)
         'open_menu':
             print('menu')
+        'scoreboard':
+            print('scoreboard')
+        # 'open_chat':
+        #     if state:
+        #         print('chat')
         'switch_seat_1':
             if state:
                 switch_seat(0)
@@ -152,9 +158,6 @@ func _handle_input_event(action, state):
         'switch_seat_3':
             if state:
                 switch_seat(2)
-        'exit':
-            get_tree().quit()
-
 
 var previous_state = {}
 var current_time = 0.0
@@ -185,7 +188,8 @@ func _physics_process(delta):
         input_state['roll'] = roll
         input_state['yaw'] = 0
     
-        if !GameManager.connected:
+        if !Network.connected:
+            print('local')
             apply_input(input_state)
             return
 
