@@ -81,23 +81,63 @@ depth = 2500.0
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 547.913, 0, -147.284 )
 
 [node name="Target" parent="Targets" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5073, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0 )
 rings = "four"
 
 [node name="Target2" parent="Targets" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5073, -39.33 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -50 )
 rings = "four"
 
 [node name="Target3" parent="Targets" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5073, -84.036 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -100 )
 rings = "four"
 
 [node name="Target4" parent="Targets" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5073, -136.78 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -150 )
 rings = "four"
 
 [node name="Target5" parent="Targets" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15.5073, -194.489 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, -200 )
+rings = "four"
+
+[node name="Target6" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, 0 )
+rings = "four"
+
+[node name="Target7" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, -50 )
+rings = "four"
+
+[node name="Target8" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, -100 )
+rings = "four"
+
+[node name="Target9" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, -150 )
+rings = "four"
+
+[node name="Target10" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 100, -200 )
+rings = "four"
+
+[node name="Target11" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, 0 )
+rings = "four"
+
+[node name="Target12" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, -50 )
+rings = "four"
+
+[node name="Target13" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, -100 )
+rings = "four"
+
+[node name="Target14" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, -150 )
+rings = "four"
+
+[node name="Target15" parent="Targets" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 150, -200 )
 rings = "four"
 
 [node name="Props" type="Spatial" parent="."]
