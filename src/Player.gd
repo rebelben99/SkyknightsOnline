@@ -189,7 +189,6 @@ func _physics_process(delta):
         input_state['yaw'] = 0
     
         if !Network.connected:
-            print('local')
             apply_input(input_state)
             return
 
