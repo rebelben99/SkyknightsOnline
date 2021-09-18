@@ -9,7 +9,6 @@ var prev_pos
 var origin
 
 func init(weapon, angle):
-    print(angle)
     fired_by = weapon
     global_transform = weapon.get_node('Muzzle').global_transform
     rotate(Vector3.FORWARD, angle.y)
