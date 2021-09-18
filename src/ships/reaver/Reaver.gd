@@ -69,6 +69,7 @@ func _physics_process(delta):
     wing_angle = lerp(wing_angle, target_wing_angle, wing_turn_speed)
     
     $Model/Wings.rotation_degrees.x = wing_angle
+    $Model/Engines.rotation_degrees.x = wing_angle
     
     if current_weapon:
         current_weapon.firing = input_state['fire_primary']

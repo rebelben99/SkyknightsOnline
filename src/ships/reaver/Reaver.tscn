@@ -51,6 +51,7 @@ can_sleep = false
 script = ExtResource( 4 )
 
 [node name="Hitbox" type="Area" parent="."]
+visible = false
 
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70373, 1.62545 )
@@ -81,10 +82,13 @@ shape = SubResource( 7 )
 [node name="Chassis" parent="Model" index="0"]
 material/0 = SubResource( 8 )
 
-[node name="Wings" parent="Model" index="1"]
+[node name="Engines" parent="Model" index="1"]
 material/0 = SubResource( 8 )
 
-[node name="Cockpit" parent="Model" index="2"]
+[node name="Wings" parent="Model" index="2"]
+material/0 = SubResource( 8 )
+
+[node name="Cylinder" parent="Model" index="4"]
 material/0 = SubResource( 8 )
 
 [node name="Seats" type="Spatial" parent="."]
