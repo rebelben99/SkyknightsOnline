@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/TestWorld Height Output-1025.png-9efb3e71c30966ac87d4b96885456d92.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://src/scenes/TestWorld/TestWorld Height Output-1025.png"
+dest_files=[ "res://.import/TestWorld Height Output-1025.png-9efb3e71c30966ac87d4b96885456d92.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=true
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
