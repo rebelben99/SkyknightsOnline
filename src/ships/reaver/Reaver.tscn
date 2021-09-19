@@ -9,6 +9,7 @@
 [ext_resource path="res://src/ships/Engine.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/ships/reaver/reaver.glb" type="PackedScene" id=8]
 [ext_resource path="res://src/ui/healthbar/HealthBar.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/ships/reaver/ReaverMaterial.tres" type="Material" id=10]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
@@ -30,19 +31,6 @@ extents = Vector3( 0.283527, 1.27621, 0.789101 )
 extents = Vector3( 2.20341, 0.0832755, 0.449742 )
 
 [sub_resource type="BoxShape" id=7]
-
-[sub_resource type="SpatialMaterial" id=8]
-flags_world_triplanar = true
-flags_do_not_receive_shadows = true
-flags_disable_ambient_light = true
-flags_ensure_correct_normals = true
-albedo_color = Color( 0.505882, 0.505882, 0.505882, 1 )
-metallic = 1.0
-refraction_enabled = true
-refraction_scale = 0.05
-refraction_texture_channel = 0
-uv1_triplanar = true
-uv2_triplanar = true
 
 [node name="Reaver" type="RigidBody"]
 physics_material_override = SubResource( 1 )
@@ -75,21 +63,22 @@ shape = SubResource( 6 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05671, 0 )
+visible = false
 shape = SubResource( 7 )
 
 [node name="Model" parent="." instance=ExtResource( 8 )]
 
 [node name="Chassis" parent="Model" index="0"]
-material/0 = SubResource( 8 )
+material/0 = ExtResource( 10 )
 
 [node name="Engines" parent="Model" index="1"]
-material/0 = SubResource( 8 )
+material/0 = ExtResource( 10 )
 
 [node name="Wings" parent="Model" index="2"]
-material/0 = SubResource( 8 )
+material/0 = ExtResource( 10 )
 
 [node name="Cylinder" parent="Model" index="4"]
-material/0 = SubResource( 8 )
+material/0 = ExtResource( 10 )
 
 [node name="Seats" type="Spatial" parent="."]
 script = ExtResource( 5 )
@@ -109,7 +98,7 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0
 script = ExtResource( 2 )
 
 [node name="CameraPos" type="Spatial" parent="Seats/0/ThirdPersonCamera"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 5.03272, -18.1029 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -2.16516, -18.1029 )
 
 [node name="Nosegun" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48337, 4.62474 )
@@ -123,7 +112,7 @@ visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="FinHardpoint"]
 mesh = ExtResource( 6 )
-material/0 = SubResource( 8 )
+material/0 = ExtResource( 10 )
 
 [node name="Engine" parent="." instance=ExtResource( 7 )]
 
